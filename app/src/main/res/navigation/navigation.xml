@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/searchScreenFragment">
+
+    <fragment
+        android:id="@+id/searchScreenFragment"
+        android:name="com.example.jeff.iplocator.view.SearchScreenFragment"
+        android:label="search_screen_fragment"
+        tools:layout="@layout/search_screen_fragment" >
+        <action
+            android:id="@+id/action_searchScreenFragment_to_aboutScreenFragment"
+            app:destination="@id/aboutScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutScreenFragment"
+        android:name="com.example.jeff.iplocator.view.AboutScreenFragment"
+        android:label="about_screen_fragment"
+        tools:layout="@layout/about_screen_fragment" >
+        <action
+            android:id="@+id/action_aboutScreenFragment_to_searchScreenFragment"
+            app:destination="@id/searchScreenFragment" />
+    </fragment>
+</navigation>
