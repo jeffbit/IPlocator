@@ -51,6 +51,9 @@ dependencies {
     def picasso_version = "2.71828"
 
 
+    //Google Play Services
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
+
     //Gson
     implementation "com.squareup.retrofit2:converter-gson:$gson_version"
 
@@ -75,11 +78,13 @@ dependencies {
     //Koin for DI
     implementation "org.koin:koin-core:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
+
     //Koin AndroidX ViewModel features
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
 
     //Picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }

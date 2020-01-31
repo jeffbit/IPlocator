@@ -1,16 +1,15 @@
 package com.example.jeff.iplocator.view
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
-import android.view.*
-import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.util.hideKeyBoard
+import com.example.jeff.iplocator.util.loadImageToDisplay
 import com.example.jeff.iplocator.viewmodel.SearchScreenViewModel
 import kotlinx.android.synthetic.main.search_screen_fragment.*
 
@@ -23,6 +22,7 @@ class SearchScreenFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        hideKeyBoard()
 //        //call to start Koin
 //        startKoin {
 //            androidLogger()
@@ -31,8 +31,6 @@ class SearchScreenFragment : Fragment() {
 //
 //    }
     }
-
-
 
 
     override fun onCreateView(
@@ -55,9 +53,9 @@ class SearchScreenFragment : Fragment() {
     private fun observeResult() {
 
         myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                search_textview.text = it.toString()
-            }
+
+            isp_textView.text = it.toString()
+
 
         })
     }
@@ -90,10 +88,7 @@ class SearchScreenFragment : Fragment() {
     private fun showErrorMessage() {
         myViewModel.showErrorMessage.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                search_textview.text = getString(R.string.search_error)
-
-            } else {
-
+                ip_textview.text = getString(R.string.search_error)
             }
         })
     }

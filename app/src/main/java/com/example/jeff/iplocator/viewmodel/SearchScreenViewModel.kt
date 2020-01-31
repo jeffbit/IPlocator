@@ -6,9 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Repository
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.*
 
-class SearchScreenViewModel() : ViewModel() {
+class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
     private val TAG: String = "SEARCH_SCREEN_VIEWMODEL"
 
     private val viewModelJob = SupervisorJob()
@@ -36,6 +41,19 @@ class SearchScreenViewModel() : ViewModel() {
     val showResults: LiveData<Boolean>
         get() = _showResults
 
+    private var myMap: GoogleMap? = null
+
+    fun displayMap(lat: Double, lon: Double, location: String?) {
+        if (lat != null && lon != null) {
+            val latLon = LatLng(lat, lon)
+            myMap?.addMarker(MarkerOptions().position(latLon).title(location))
+            myMap?.animateCamera(CameraUpdateFactory.newLatLng(latLon))
+        } else {
+            //Display message that says no location available
+        }
+
+
+    }
 
     fun returnIpAddress(ip: String) {
         _loadingScreen.value = false
@@ -48,6 +66,7 @@ class SearchScreenViewModel() : ViewModel() {
                 _showResults.value = true
             } catch (e: java.lang.Exception) {
                 showLogError(e.localizedMessage)
+                e.printStackTrace()
                 _ipAddress.value = null
                 _showErrorMessage.value = true
                 _showResults.value = false
@@ -80,5 +99,11 @@ class SearchScreenViewModel() : ViewModel() {
         super.onCleared()
         Log.d(TAG, "UI Scope canceled")
         uiScope.cancel()
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        myMap = map
+
+
     }
 }

@@ -38,3 +38,51 @@ data class IpAddress(
     val timeZone: TimeZone
 )
 
+data class Asn(
+    val asn: String,
+    val domain: String,
+    val name: String,
+    val route: String,
+    val type: String
+)
+
+data class Currency(
+    val code: String,
+    val name: String,
+    val native: String,
+    val plural: String,
+    val symbol: String
+)
+
+data class Language(
+    val name: String,
+    val native: String
+)
+
+data class Threat(
+    @SerializedName("is_anonymous")
+    val isAnonymous: Boolean,
+    @SerializedName("is_bogon")
+    val isBogon: Boolean,
+    @SerializedName("is_known_abuser")
+    val isKnownAbuser: Boolean,
+    @SerializedName("is_known_attacker")
+    val isKnownAttacker: Boolean,
+    @SerializedName("is_proxy")
+    val isProxy: Boolean,
+    @SerializedName("is_threat")
+    val isThreat: Boolean,
+    @SerializedName("is_tor")
+    val isTor: Boolean
+)
+
+data class TimeZone(
+    val abbr: String,
+    @SerializedName("current_time")
+    val currentTime: String,
+    @SerializedName("is_dst")
+    val isDst: Boolean,
+    val name: String,
+    val offset: String
+)
+
