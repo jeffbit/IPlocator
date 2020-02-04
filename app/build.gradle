@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -49,6 +53,7 @@ dependencies {
     def livedata_ktx = "2.2.0"
     def koin_version = "2.0.1"
     def picasso_version = "2.71828"
+    def navigation = "2.2.0"
 
 
     //Google Play Services
@@ -82,9 +87,13 @@ dependencies {
     //Koin AndroidX ViewModel features
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
 
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$picasso_version"
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }

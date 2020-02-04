@@ -8,12 +8,11 @@ import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Repository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.*
 
-class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
+class SearchScreenViewModel() : ViewModel() {
     private val TAG: String = "SEARCH_SCREEN_VIEWMODEL"
 
     private val viewModelJob = SupervisorJob()
@@ -41,18 +40,39 @@ class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
     val showResults: LiveData<Boolean>
         get() = _showResults
 
-    private var myMap: GoogleMap? = null
 
-    fun displayMap(lat: Double, lon: Double, location: String?) {
-        if (lat != null && lon != null) {
-            val latLon = LatLng(lat, lon)
-            myMap?.addMarker(MarkerOptions().position(latLon).title(location))
-            myMap?.animateCamera(CameraUpdateFactory.newLatLng(latLon))
-        } else {
-            //Display message that says no location available
-        }
+    private val _lat = MutableLiveData<Double>()
+    val lat: LiveData<Double>
+        get() = _lat
+
+    private val _lon = MutableLiveData<Double>()
+    val lon: LiveData<Double>
+        get() = _lon
 
 
+    private val _latLon = MutableLiveData<LatLng>()
+    val latLon: LiveData<LatLng>
+        get() = _latLon
+    lateinit var myMap: GoogleMap
+
+    fun displayMap(lat: Double, lon: Double, location: String? = "Marker") {
+        _lat.value = lat
+        _lon.value = lon
+        val latLon = LatLng(lat, lon)
+        Log.e("SEARCH", "${lat}, ${lon}")
+        myMap.addMarker(MarkerOptions().position(latLon).title(location))
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(latLon))
+
+
+    }
+
+    fun clearLatAndLon() {
+        _lat.value = null
+        _lon.value = null
+    }
+
+    fun clearMap() {
+        myMap.clear()
     }
 
     fun returnIpAddress(ip: String) {
@@ -65,7 +85,7 @@ class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
                 _loadingScreen.value = true
                 _showResults.value = true
             } catch (e: java.lang.Exception) {
-                showLogError(e.localizedMessage)
+                showLogError(e.localizedMessage!!)
                 e.printStackTrace()
                 _ipAddress.value = null
                 _showErrorMessage.value = true
@@ -73,7 +93,6 @@ class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
                 _loadingScreen.value = true
 
             }
-
         }
     }
 
@@ -100,10 +119,7 @@ class SearchScreenViewModel() : ViewModel(), OnMapReadyCallback {
         Log.d(TAG, "UI Scope canceled")
         uiScope.cancel()
     }
-
-    override fun onMapReady(map: GoogleMap?) {
-        myMap = map
-
-
-    }
 }
+
+
+

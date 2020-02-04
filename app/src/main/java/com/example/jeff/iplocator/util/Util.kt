@@ -1,44 +1,27 @@
 package com.example.jeff.iplocator.util
 
-import android.content.Context
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.jeff.iplocator.R
-import com.squareup.picasso.Picasso
 
+
+fun validateIpAddress(ip: String): Boolean {
+    val pattern =
+        "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$"
+    return ip.matches(pattern.toRegex())
+}
 
 //load image from retrofit call
-fun loadImageToDisplay(url: String?, imageView: ImageView, widthResize: Int, heightResize: Int) {
+fun loadImageToDisplay(url: String?, imageView: ImageView, view: View, widthResize: Int, heightResize: Int) {
     if (url != null) {
-        Picasso.get().load(url).resizeDimen(widthResize, heightResize)
+        Glide.with(view).load(url).override(widthResize, heightResize)
             .placeholder(R.drawable.ic_image_black_24dp)
             .error(R.drawable.ic_broken_image_black_24dp)
             .into(imageView)
+
     } else {
         imageView.visibility = View.GONE
     }
 
-}
-
-//Utility to hide keyboard from view
-fun AppCompatActivity.closeKeyBoard() {
-    val view = this.currentFocus
-    if (view != null) {
-        val iim = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        iim.hideSoftInputFromWindow(view.windowToken, 0)
-    } else {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-    }
-
-}
-
-fun Fragment.hideKeyBoard() {
-    val activity = this.activity
-    if (activity is AppCompatActivity) {
-        activity.closeKeyBoard()
-    }
 }

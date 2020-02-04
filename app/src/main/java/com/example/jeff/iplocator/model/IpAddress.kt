@@ -7,7 +7,7 @@ data class IpAddress(
     val asn: Asn,
     @SerializedName("calling_code")
     val callingCode: String,
-    val city: Any,
+    val city: String,
     @SerializedName("continent_code")
     val continentCode: String,
     @SerializedName("continent_name")
@@ -29,10 +29,10 @@ data class IpAddress(
     val languages: List<Language>,
     val latitude: Double,
     val longitude: Double,
-    val postal: Any,
-    val region: Any,
+    val postal: String,
+    val region: String,
     @SerializedName("region_code")
-    val regionCode: Any,
+    val regionCode: String,
     val threat: Threat,
     @SerializedName("time_zone")
     val timeZone: TimeZone
