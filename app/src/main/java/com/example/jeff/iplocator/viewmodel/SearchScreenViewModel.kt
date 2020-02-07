@@ -1,11 +1,13 @@
 package com.example.jeff.iplocator.viewmodel
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Repository
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,6 +18,7 @@ import kotlinx.coroutines.*
 
 class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     private val TAG: String = "SEARCH_SCREEN_VIEWMODEL"
+
 
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -52,7 +55,7 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         get() = _latLon
     lateinit var myMap: GoogleMap
 
-    fun displayMap(lat: Double, lon: Double, location: String? = "Marker") {
+    fun displayMap(lat: Double, lon: Double, location: String? = R.string.isp_marker.toString()) {
         _lat.value = lat
         _lon.value = lon
         val latLon = LatLng(lat, lon)
@@ -81,7 +84,7 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
                 _ipAddress.value = repository.getData(ip)
                 _loadingScreen.value = true
                 _showResults.value = true
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 showLogError(e.localizedMessage!!)
                 e.printStackTrace()
                 _ipAddress.value = null
@@ -93,10 +96,35 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun clearPreviousErrors() {
+        _showErrorMessage.value = false
+        _loadingScreen.value = false
+    }
 
+    fun hideTextviewIfNull(
+        textView: TextView,
+        context: Context,
+        stringResource: Int,
+        value: String?
+    ) {
+        if (value.isNullOrEmpty()) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            textView.text = context.getString(stringResource, value)
+        }
 
+    }
 
+    fun hideTextviewIfNull(textView: TextView, value: String?) {
+        if (value.isNullOrEmpty()) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            textView.text = value
+        }
 
+    }
 
 
     private fun showLogError(message: String) {
@@ -109,6 +137,10 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         Log.d(TAG, "UI Scope canceled")
         uiScope.cancel()
     }
+
+    //Todo: create error message to display over view if ip is not valid. hide everything in view besides error message to be displayed
+
+
 }
 
 

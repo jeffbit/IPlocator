@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -40,6 +39,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                myViewModel.clearPreviousErrors()
                 enterOnClick(query!!)
                 return false
             }
@@ -86,7 +86,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         observeResult()
 
     }
@@ -99,12 +98,80 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
             if (it == null) {
                 Toast.makeText(context, "No Address found", Toast.LENGTH_SHORT).show();
             } else {
-
-                isp_textView.text = it.toString()
                 myViewModel.displayMap(it.latitude, it.longitude, it.asn.name)
-                //map title
+                //map cardview
                 loadImageToDisplay(it.flag, flag_imageview, view!!, 60, 40)
-                hideTextviewIfNull(ip_textview, it.ip)
+                myViewModel.hideTextviewIfNull(country_textview, it.countryName)
+                myViewModel.hideTextviewIfNull(
+                    lat_textview,
+                    context!!,
+                    R.string.lat,
+                    it.latitude.toString()
+                )
+                myViewModel.hideTextviewIfNull(
+                    lon_textview,
+                    context!!,
+                    R.string.lon,
+                    it.longitude.toString()
+                )
+                //location cardview
+                myViewModel.hideTextviewIfNull(
+                    ipadress_textview,
+                    context!!,
+                    R.string.ip_address,
+                    it.ip
+                )
+                myViewModel.hideTextviewIfNull(isp_textView, context!!, R.string.isp, it.asn.name)
+                myViewModel.hideTextviewIfNull(city_textview, context!!, R.string.city, it.city)
+                myViewModel.hideTextviewIfNull(
+                    region_textview,
+                    context!!,
+                    R.string.region,
+                    it.region
+                )
+                myViewModel.hideTextviewIfNull(
+                    countryname_textview,
+                    context!!,
+                    R.string.country,
+                    it.countryName
+                )
+                myViewModel.hideTextviewIfNull(
+                    continentname_textview,
+                    context!!,
+                    R.string.continent,
+                    it.continentName
+                )
+                myViewModel.hideTextviewIfNull(
+                    postal_textview,
+                    context!!,
+                    R.string.postal_code,
+                    it.postal
+                )
+                myViewModel.hideTextviewIfNull(
+                    language_textview,
+                    context!!,
+                    R.string.language,
+                    it.languages[0].name
+                )
+                myViewModel.hideTextviewIfNull(
+                    currency_textview,
+                    context!!,
+                    R.string.currency,
+                    it.currency.name
+                )
+                myViewModel.hideTextviewIfNull(
+                    timezone_name_textview,
+                    context!!,
+                    R.string.timezone,
+                    it.timeZone.name
+                )
+                myViewModel.hideTextviewIfNull(
+                    current_time_textview,
+                    context!!,
+                    R.string.current_time,
+                    it.timeZone.currentTime
+                )
+
 
             }
 
@@ -130,15 +197,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    fun hideTextviewIfNull(textView: TextView, value: String) {
-        if (value.isNullOrEmpty()) {
-            textView.visibility = View.GONE
-        } else {
-            textView.visibility = View.VISIBLE
-            textView.text = value
-        }
-    }
-
 
     private fun showProgressBar() {
 
@@ -159,6 +217,8 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
+
+    //TODO: display empty textviews upon start, if ip is valid display textviews and map with informaiton, if invalid hide textviews and display error message
     private fun showResults() {
         myViewModel.showResults.observe(viewLifecycleOwner, Observer {
             if (it == true) {

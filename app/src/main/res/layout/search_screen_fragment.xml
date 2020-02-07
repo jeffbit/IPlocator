@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".view.SearchScreenFragment">
 
     <ScrollView
@@ -17,11 +19,14 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/map_cardview"
                 style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -33,26 +38,27 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp">
 
-                        <ImageView
+
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/flag_imageview"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
+                            android:layout_width="48dp"
+                            android:layout_height="30dp"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:layout_marginBottom="4dp"
                             android:contentDescription="@string/todo"
-                            android:scaleType="fitStart"
+                            android:scaleType="fitCenter"
                             android:src="@mipmap/ic_launcher_round" />
 
-                        <TextView
-                            android:id="@+id/ip_textview"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/country_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/work_sans_medium"
                             android:gravity="center"
-                            android:text="@string/ip_address"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                            android:text="@string/country_title"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 
                     </RelativeLayout>
@@ -70,20 +76,22 @@
                         android:layout_margin="4dp"
                         android:gravity="center">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/lon_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:gravity="right"
+                            android:fontFamily="@font/work_sans"
+                            android:gravity="end"
                             android:text="@string/lon"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/lat_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
+                            android:fontFamily="@font/work_sans"
                             android:gravity="start"
                             android:text="@string/lat"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
@@ -91,14 +99,16 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/location_info_cardview"
                 style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp">
+                android:layout_margin="4dp"
+                android:elevation="2dp"
+                app:cardCornerRadius="4dp">
 
                 <ProgressBar
                     android:id="@+id/search_progressBar"
@@ -113,87 +123,107 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/information_title_textview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/work_sans_medium"
                         android:gravity="center"
                         android:text="@string/information"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/colorSecondary" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/ipadress_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
+                        android:gravity="center"
+                        android:text="@string/ip_address" />
+
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/isp_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:gravity="center"
                         android:text="@string/isp" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/city_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:gravity="center"
                         android:text="@string/city" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/region_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:text="@string/region"
                         android:textAlignment="center" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/countryname_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:gravity="center"
-                        android:text="@string/country_title" />
+                        android:text="@string/country" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/continentname_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:gravity="center"
                         android:text="@string/continent" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/postal_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:gravity="center"
                         android:text="@string/postal_code" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/language_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:text="@string/language"
                         android:textAlignment="center" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/currency_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:text="@string/currency"
                         android:textAlignment="center" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/timezone_name_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:text="@string/timezone"
                         android:textAlignment="center" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_time_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/work_sans"
                         android:text="@string/current_time"
                         android:textAlignment="center" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>

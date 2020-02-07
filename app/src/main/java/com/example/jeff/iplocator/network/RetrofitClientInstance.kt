@@ -8,7 +8,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 //creates Api
-//"https://api.ipdata.co/1.1.1.1?api-key=afcddd6bfbb6a79d0dfad606fad449bbb491cd07f89833d312ae16e7
 object RetrofitClientInstance {
     private val BASE_URL =
         "https://api.ipdata.co/"
