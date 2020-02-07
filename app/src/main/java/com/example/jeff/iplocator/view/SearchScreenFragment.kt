@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.example.jeff.iplocator.R
+import com.example.jeff.iplocator.util.convertTime
+import com.example.jeff.iplocator.util.getMobileIp
 import com.example.jeff.iplocator.util.loadImageToDisplay
 import com.example.jeff.iplocator.util.validateIpAddress
 import com.example.jeff.iplocator.viewmodel.SearchScreenViewModel
@@ -26,8 +28,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
+        
     }
 
 
@@ -39,7 +40,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                myViewModel.clearPreviousErrors()
                 enterOnClick(query!!)
                 return false
             }
@@ -85,8 +85,10 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        flag_imageview.visibility = View.GONE
 
         observeResult()
+
 
     }
 
@@ -104,72 +106,58 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
                 myViewModel.hideTextviewIfNull(country_textview, it.countryName)
                 myViewModel.hideTextviewIfNull(
                     lat_textview,
-                    context!!,
-                    R.string.lat,
-                    it.latitude.toString()
+                    getString(R.string.lat, it.latitude.toString())
                 )
                 myViewModel.hideTextviewIfNull(
                     lon_textview,
-                    context!!,
-                    R.string.lon,
-                    it.longitude.toString()
+                    getString(R.string.lon, it.longitude.toString())
                 )
+
                 //location cardview
                 myViewModel.hideTextviewIfNull(
-                    ipadress_textview,
-                    context!!,
-                    R.string.ip_address,
-                    it.ip
-                )
-                myViewModel.hideTextviewIfNull(isp_textView, context!!, R.string.isp, it.asn.name)
-                myViewModel.hideTextviewIfNull(city_textview, context!!, R.string.city, it.city)
-                myViewModel.hideTextviewIfNull(
-                    region_textview,
-                    context!!,
-                    R.string.region,
-                    it.region
+                    proxy_textview,
+                    proxy_input_textview,
+                    it.threat.isProxy.toString()
                 )
                 myViewModel.hideTextviewIfNull(
-                    countryname_textview,
-                    context!!,
-                    R.string.country,
+                    threat_time_textview,
+                    threat_input_textview,
+                    it.threat.isThreat.toString()
+                )
+                myViewModel.hideTextviewIfNull(ipadress_textview, ip_input_textview, it.ip)
+                myViewModel.hideTextviewIfNull(isp_textView, isp_input_textview, it.asn.name)
+                myViewModel.hideTextviewIfNull(city_textview, city_input_textview, it.city)
+                myViewModel.hideTextviewIfNull(region_textview, region_input_textview, it.region)
+                myViewModel.hideTextviewIfNull(
+                    country_textview,
+                    country_input_textview,
                     it.countryName
                 )
                 myViewModel.hideTextviewIfNull(
                     continentname_textview,
-                    context!!,
-                    R.string.continent,
+                    continent_input_textview,
                     it.continentName
                 )
-                myViewModel.hideTextviewIfNull(
-                    postal_textview,
-                    context!!,
-                    R.string.postal_code,
-                    it.postal
-                )
+                myViewModel.hideTextviewIfNull(postal_textview, postal_input_textview, it.postal)
                 myViewModel.hideTextviewIfNull(
                     language_textview,
-                    context!!,
-                    R.string.language,
+                    language_input_textview,
                     it.languages[0].name
                 )
                 myViewModel.hideTextviewIfNull(
                     currency_textview,
-                    context!!,
-                    R.string.currency,
+                    currency_input_textview,
                     it.currency.name
                 )
                 myViewModel.hideTextviewIfNull(
                     timezone_name_textview,
-                    context!!,
-                    R.string.timezone,
-                    it.timeZone.name
+                    timezone_input_textview,
+                    it.timeZone.abbr
                 )
                 myViewModel.hideTextviewIfNull(
                     current_time_textview,
-                    context!!,
-                    R.string.current_time,
-                    it.timeZone.currentTime
+                    currenttime_input_textview,
+                    convertTime(it.timeZone.currentTime)
                 )
 
 
@@ -188,7 +176,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
             myViewModel.clearLatAndLon()
 
             observeResult()
-            showErrorMessage()
             showProgressBar()
         } else {
             Toast.makeText(context, "NOT VALID", Toast.LENGTH_SHORT).show();
@@ -209,26 +196,9 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    private fun showErrorMessage() {
-        myViewModel.showErrorMessage.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                isp_textView.text = getString(R.string.search_error)
-            }
-        })
-    }
-
 
     //TODO: display empty textviews upon start, if ip is valid display textviews and map with informaiton, if invalid hide textviews and display error message
-    private fun showResults() {
-        myViewModel.showResults.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                searchscreen_scrollview.visibility = View.VISIBLE
-            } else {
-                searchscreen_scrollview.visibility = View.GONE
 
-            }
-        })
-    }
 
     override fun onMapReady(map: GoogleMap) {
         Log.e("Search", "Map Ready")

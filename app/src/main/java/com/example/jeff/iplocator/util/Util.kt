@@ -1,9 +1,15 @@
 package com.example.jeff.iplocator.util
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.jeff.iplocator.R
+import java.net.Inet4Address
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 fun validateIpAddress(ip: String): Boolean {
@@ -13,8 +19,15 @@ fun validateIpAddress(ip: String): Boolean {
 }
 
 //load image from retrofit call
-fun loadImageToDisplay(url: String?, imageView: ImageView, view: View, widthResize: Int, heightResize: Int) {
+fun loadImageToDisplay(
+    url: String?,
+    imageView: ImageView,
+    view: View,
+    widthResize: Int,
+    heightResize: Int
+) {
     if (url != null) {
+        imageView.visibility = View.VISIBLE
         Glide.with(view).load(url).override(widthResize, heightResize)
             .placeholder(R.drawable.ic_image_black_24dp)
             .error(R.drawable.ic_broken_image_black_24dp)
@@ -23,5 +36,40 @@ fun loadImageToDisplay(url: String?, imageView: ImageView, view: View, widthResi
     } else {
         imageView.visibility = View.GONE
     }
-
 }
+
+//TODO: format api string date
+@SuppressLint("NewApi")
+fun convertTime(time: String): String? {
+    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+    val converted = time.format(format)
+    return converted
+}
+
+
+//TODO: get mobile cellular address, currently this gets private address on mobile device
+fun getMobileIp(): String {
+    try {
+        val interfaces: List<NetworkInterface> =
+            Collections.list(NetworkInterface.getNetworkInterfaces())
+        for (intf in interfaces) {
+            val addrs: List<InetAddress> = Collections.list(intf.inetAddresses)
+            for (addr in addrs) {
+                if (!addr.isLoopbackAddress && addr is Inet4Address) {
+                    val sAddr: String = addr.hostAddress
+                    return sAddr
+                }
+            }
+        }
+
+    } catch (e: Exception) {
+
+    }
+    return ""
+}
+
+
+
+
+
+

@@ -32,14 +32,6 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     val loadingScreen: LiveData<Boolean>
         get() = _loadingScreen
 
-    private val _showErrorMessage = MutableLiveData<Boolean>()
-    val showErrorMessage: LiveData<Boolean>
-        get() = _showErrorMessage
-
-    private val _showResults = MutableLiveData<Boolean>()
-    val showResults: LiveData<Boolean>
-        get() = _showResults
-
 
     private val _lat = MutableLiveData<Double>()
     val lat: LiveData<Double>
@@ -55,13 +47,14 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         get() = _latLon
     lateinit var myMap: GoogleMap
 
-    fun displayMap(lat: Double, lon: Double, location: String? = R.string.isp_marker.toString()) {
+    fun displayMap(lat: Double, lon: Double, location: String? = R.string.isp.toString()) {
         _lat.value = lat
         _lon.value = lon
         val latLon = LatLng(lat, lon)
         Log.e("SEARCH", "${lat}, ${lon}")
         myMap.addMarker(MarkerOptions().position(latLon).title(location))
         myMap.moveCamera(CameraUpdateFactory.newLatLng(latLon))
+        myMap.moveCamera(CameraUpdateFactory.zoomTo(10f))
 
 
     }
@@ -77,51 +70,46 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     fun returnIpAddress(ip: String) {
         _loadingScreen.value = false
-        _showErrorMessage.value = false
-        _showResults.value = false
+
         uiScope.launch {
             try {
                 _ipAddress.value = repository.getData(ip)
                 _loadingScreen.value = true
-                _showResults.value = true
+
             } catch (e: Exception) {
                 showLogError(e.localizedMessage!!)
                 e.printStackTrace()
                 _ipAddress.value = null
-                _showErrorMessage.value = true
-                _showResults.value = false
+
                 _loadingScreen.value = true
 
             }
         }
     }
 
-    fun clearPreviousErrors() {
-        _showErrorMessage.value = false
-        _loadingScreen.value = false
-    }
 
     fun hideTextviewIfNull(
         textView: TextView,
-        context: Context,
-        stringResource: Int,
         value: String?
     ) {
         if (value.isNullOrEmpty()) {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            textView.text = context.getString(stringResource, value)
+            textView.text =  value
         }
 
     }
 
-    fun hideTextviewIfNull(textView: TextView, value: String?) {
+    fun hideTextviewIfNull(textViewTitle: TextView, textViewData: TextView, value: String?) {
         if (value.isNullOrEmpty()) {
-            textView.visibility = View.GONE
+            textViewTitle.visibility = View.GONE
+            textViewData.visibility = View.GONE
+
         } else {
-            textView.visibility = View.VISIBLE
-            textView.text = value
+            textViewTitle.visibility = View.VISIBLE
+            textViewData.visibility = View.VISIBLE
+            textViewData.text = value
         }
 
     }
