@@ -1,0 +1,23 @@
+package com.example.jeff.iplocator.util
+
+import android.app.Application
+import com.example.jeff.iplocator.util.networkModule
+import com.example.jeff.iplocator.util.retrofitClientModule
+import com.example.jeff.iplocator.util.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
+
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        //call to start Koin
+        startKoin {
+            androidLogger(Level.DEBUG)
+            androidContext(this@App)
+            modules(listOf(networkModule, viewModelModule, retrofitClientModule))
+
+        }
+    }
+}

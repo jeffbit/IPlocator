@@ -8,7 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.util.loadImageToDisplay
@@ -18,24 +17,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.search_screen_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
-//    val myViewModel: SearchScreenViewModel by viewModel()
+    private val myViewModel by viewModel<SearchScreenViewModel>()
 
-    private lateinit var myViewModel: SearchScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-//        //call to start Koin
-//        startKoin {
-//            androidLogger()
-//            androidContext(this@SearchScreenFragment.context?.applicationContext!!)
-//            modules(networkModule)
-//
-//    }
 
     }
 
@@ -44,7 +36,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         inflater.inflate(R.menu.options_menu, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
         val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Enter valid IP"
+        searchView.queryHint = "Enter IP"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -94,9 +86,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        myViewModel = ViewModelProvider(this).get(SearchScreenViewModel::class.java)
-
-
 
         observeResult()
 
@@ -107,7 +96,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
         myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
 
-            if (it.equals(null)) {
+            if (it == null) {
                 Toast.makeText(context, "No Address found", Toast.LENGTH_SHORT).show();
             } else {
 
@@ -115,28 +104,8 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
                 myViewModel.displayMap(it.latitude, it.longitude, it.asn.name)
                 //map title
                 loadImageToDisplay(it.flag, flag_imageview, view!!, 60, 40)
-                hideTextviewIfNull(country_textview, it.countryName)
-                hideTextviewIfNull(
-                    lon_textview,
-                    it.longitude.toString()
-                )
-                hideTextviewIfNull(
-                    lat_textview,
-                    it.latitude.toString()
-                )
-                hideTextviewIfNull(timezone_textview, it.timeZone.offset)
-                //location
                 hideTextviewIfNull(ip_textview, it.ip)
-                hideTextviewIfNull(isp_textView, it.asn.name)
-                hideTextviewIfNull(city_textview, it.city)
-                hideTextviewIfNull(region_textview, it.region)
-                hideTextviewIfNull(continentname_textview, it.continentName)
-                hideTextviewIfNull(postal_textview, it.postal)
-                hideTextviewIfNull(language_textview, it.languages.get(0).name)
-                hideTextviewIfNull(currency_textview, it.currency.code)
-                hideTextviewIfNull(timezone_name_textview, it.timeZone.name)
-                hideTextviewIfNull(current_time_textview, it.timeZone.currentTime)
-                hideTextviewIfNull(countryname_textview, it.countryName)
+
             }
 
 
@@ -161,8 +130,8 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun hideTextviewIfNull(textView: TextView, value: String) {
-        if (value.isNullOrBlank()) {
+    fun hideTextviewIfNull(textView: TextView, value: String) {
+        if (value.isNullOrEmpty()) {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
@@ -185,7 +154,18 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     private fun showErrorMessage() {
         myViewModel.showErrorMessage.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                ip_textview.text = getString(R.string.search_error)
+                isp_textView.text = getString(R.string.search_error)
+            }
+        })
+    }
+
+    private fun showResults() {
+        myViewModel.showResults.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                searchscreen_scrollview.visibility = View.VISIBLE
+            } else {
+                searchscreen_scrollview.visibility = View.GONE
+
             }
         })
     }

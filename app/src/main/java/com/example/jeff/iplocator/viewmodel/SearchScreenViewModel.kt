@@ -1,6 +1,8 @@
 package com.example.jeff.iplocator.viewmodel
 
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,16 +14,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.*
 
-class SearchScreenViewModel() : ViewModel() {
+class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     private val TAG: String = "SEARCH_SCREEN_VIEWMODEL"
 
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-
-    //convert to dependency injection for cleaner code and better testing
-    val repository: Repository =
-        Repository()
 
 
     private val _ipAddress = MutableLiveData<IpAddress>()
@@ -97,16 +94,9 @@ class SearchScreenViewModel() : ViewModel() {
     }
 
 
-//    val testIp = liveData {
-//        Log.e("testIp", "Started")
-//        try {
-//            val test = repository.getData("1.1.1.1")
-//            emit(test)
-//            Log.e("Success", "Submited")
-//        } catch (e: Exception) {
-//            showLogError(e.localizedMessage!!)
-//        }
-//    }
+
+
+
 
 
     private fun showLogError(message: String) {

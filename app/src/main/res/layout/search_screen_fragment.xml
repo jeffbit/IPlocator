@@ -7,6 +7,7 @@
     tools:context=".view.SearchScreenFragment">
 
     <ScrollView
+        android:id="@+id/searchscreen_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -41,16 +42,16 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
+                            android:contentDescription="@string/todo"
                             android:scaleType="fitStart"
-                            android:src="@mipmap/ic_launcher_round"
-                            android:contentDescription="@string/todo" />
+                            android:src="@mipmap/ic_launcher_round" />
 
                         <TextView
-                            android:id="@+id/country_textview"
+                            android:id="@+id/ip_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/country"
+                            android:text="@string/ip_address"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 
@@ -70,20 +71,11 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/timezone_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:gravity="end"
-                            android:text="@string/offset"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                        <TextView
                             android:id="@+id/lon_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="right"
                             android:text="@string/lon"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -128,13 +120,6 @@
                         android:gravity="center"
                         android:text="@string/information"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                    <TextView
-                        android:id="@+id/ip_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/ip_address" />
 
                     <TextView
                         android:id="@+id/isp_textView"

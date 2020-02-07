@@ -22,9 +22,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            buildConfigField('String', "ApiKey", IPLocator_ApiKey)
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', "ApiKey", IPLocator_ApiKey)
+
         }
     }
 
@@ -52,7 +57,6 @@ dependencies {
     def kotlinCoroutineVersion = "1.0.1"
     def livedata_ktx = "2.2.0"
     def koin_version = "2.0.1"
-    def picasso_version = "2.71828"
     def navigation = "2.2.0"
 
 
@@ -93,6 +97,8 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 

@@ -2,9 +2,9 @@ package com.example.jeff.iplocator.network
 
 import com.example.jeff.iplocator.model.IpAddress
 
-class Repository {
+class Repository(private val retrofitClient: RetrofitClientInstance) {
 
-    var client = RetrofitClientInstance.ipApi
+    private val client = retrofitClient.ipApi
 
 
     suspend fun getData(ip: String): IpAddress {
