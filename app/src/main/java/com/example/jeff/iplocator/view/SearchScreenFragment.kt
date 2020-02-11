@@ -1,7 +1,5 @@
 package com.example.jeff.iplocator.view
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
@@ -11,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.model.IpAddress
+import com.example.jeff.iplocator.network.Result
 import com.example.jeff.iplocator.util.convertTime
 import com.example.jeff.iplocator.util.loadImageToDisplay
 import com.example.jeff.iplocator.util.validateIpAddress
@@ -88,7 +87,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         flag_imageview.visibility = View.GONE
-
+        hideView()
         observeResult()
 
 
@@ -97,18 +96,29 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     private fun observeResult() {
         myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
-
-            if (it == null) {
-                Toast.makeText(context, "No Address found", Toast.LENGTH_SHORT).show();
-            } else {
-                loadData(it)
-
+            when (it) {
+                is Result.Loading -> {
+                    showProgressBar()
+                }
+                is Result.Success -> {
+                    loadData(it.data)
+                    hideProgressBar()
+                    showView()
+                }
+                is Result.Error -> {
+                    showError(it.throwable)
+                    hideProgressBar()
+                    hideView()
+                }
             }
-
-
         })
     }
 
+
+    private fun showError(error: Throwable) {
+        Toast.makeText(context, "${error.message}", Toast.LENGTH_SHORT).show();
+        myViewModel.setIpAddressEmpty()
+    }
 
     private fun enterOnClick(input: String) {
         if (validateIpAddress(input)) {
@@ -117,7 +127,6 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
             myViewModel.clearMap()
             myViewModel.clearLatAndLon()
             observeResult()
-            showProgressBar()
         } else {
             Toast.makeText(context, "NOT VALID", Toast.LENGTH_SHORT).show();
         }
@@ -188,42 +197,24 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    private fun showErrorMessage() {
-        myViewModel.error.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                hideTextDisplayError()
-            }
-        })
-
-    }
-
-    private fun hideTextDisplayError() {
-        myViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            val alert: AlertDialog? = AlertDialog.Builder(context).create()
-            alert?.setTitle("Error")
-            alert?.setMessage(it)
-            alert?.setButton("Ok", (object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    dialog?.dismiss()
-
-                }
-
-            }))
-
-        })
-
-
-    }
-
     private fun showProgressBar() {
+        search_progressBar.visibility = View.VISIBLE
 
-        myViewModel.loadingScreen.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                search_progressBar.visibility = View.GONE
-            } else {
-                search_progressBar.visibility = View.VISIBLE
-            }
-        })
+    }
+
+    private fun hideProgressBar() {
+        search_progressBar.visibility = View.GONE
+
+    }
+
+    private fun hideView() {
+        map_cardview.visibility = View.GONE
+        location_info_cardview.visibility = View.GONE
+    }
+
+    private fun showView() {
+        map_cardview.visibility = View.VISIBLE
+        location_info_cardview.visibility = View.VISIBLE
     }
 
 

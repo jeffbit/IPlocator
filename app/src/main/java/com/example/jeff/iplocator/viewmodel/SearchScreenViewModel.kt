@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Repository
+import com.example.jeff.iplocator.network.Result
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -17,27 +18,14 @@ import timber.log.Timber
 
 class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
-
+    lateinit var myMap: GoogleMap
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
-    private val _ipAddress = MutableLiveData<IpAddress>()
-    val ipAddress: LiveData<IpAddress>
+    private val _ipAddress = MutableLiveData<Result<IpAddress>>()
+    val ipAddress: LiveData<Result<IpAddress>>
         get() = _ipAddress
-
-    //Loading and Error handling
-    private val _loadingScreen = MutableLiveData<Boolean>()
-    val loadingScreen: LiveData<Boolean>
-        get() = _loadingScreen
-
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
-    private val _error = MutableLiveData<Boolean>()
-    val error: LiveData<Boolean>
-        get() = _error
-
 
     private val _lat = MutableLiveData<Double>()
     val lat: LiveData<Double>
@@ -51,7 +39,24 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     private val _latLon = MutableLiveData<LatLng>()
     val latLon: LiveData<LatLng>
         get() = _latLon
-    lateinit var myMap: GoogleMap
+
+
+    fun returnIpAddress(ip: String) {
+        uiScope.launch {
+            try {
+                _ipAddress.value = Result.Loading()
+                val req = repository.getIp(ip)
+                _ipAddress.value = Result.Success(repository.getIp(ip))
+
+            } catch (e: Exception) {
+                _ipAddress.value = Result.Error(e)
+            }
+        }
+    }
+
+    fun setIpAddressEmpty() {
+        _ipAddress.value = null
+    }
 
     fun displayMap(lat: Double, lon: Double, location: String? = R.string.isp.toString()) {
         _lat.value = lat
@@ -72,32 +77,6 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     fun clearMap() {
         myMap.clear()
-    }
-
-    fun stopLoading() {
-        _loadingScreen.value = false
-    }
-
-
-    fun returnIpAddress(ip: String) {
-        _loadingScreen.value = false
-        _error.value = false
-
-        uiScope.launch {
-            try {
-                _ipAddress.value = repository.getIp(ip)
-                _loadingScreen.value = true
-
-            } catch (e: Exception) {
-                Timber.e(e.message)
-                _errorMessage.value = e.message
-                _ipAddress.value = null
-                _error.value = true
-
-                _loadingScreen.value = false
-
-            }
-        }
     }
 
 
@@ -134,7 +113,7 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         uiScope.cancel()
     }
 
-    //Todo: create error message to display over view if ip is not valid. hide everything in view besides error message to be displayed
+//Todo: create error message to display over view if ip is not valid. hide everything in view besides error message to be displayed
 
 
 }
