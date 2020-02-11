@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.example.jeff.iplocator.BuildConfig
 import com.example.jeff.iplocator.R
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +20,11 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
 
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+            Timber.d("Timber Started")
+
+        }
     }
 
 

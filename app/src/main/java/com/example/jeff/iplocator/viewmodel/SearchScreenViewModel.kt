@@ -1,7 +1,5 @@
 package com.example.jeff.iplocator.viewmodel
 
-import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -15,9 +13,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
-    private val TAG: String = "SEARCH_SCREEN_VIEWMODEL"
 
 
     private val viewModelJob = SupervisorJob()
@@ -28,9 +26,17 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     val ipAddress: LiveData<IpAddress>
         get() = _ipAddress
 
+    //Loading and Error handling
     private val _loadingScreen = MutableLiveData<Boolean>()
     val loadingScreen: LiveData<Boolean>
         get() = _loadingScreen
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+    private val _error = MutableLiveData<Boolean>()
+    val error: LiveData<Boolean>
+        get() = _error
 
 
     private val _lat = MutableLiveData<Double>()
@@ -51,7 +57,7 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         _lat.value = lat
         _lon.value = lon
         val latLon = LatLng(lat, lon)
-        Log.e("SEARCH", "${lat}, ${lon}")
+        Timber.d("Lat: %s, Lon: %s", lat, lon)
         myMap.addMarker(MarkerOptions().position(latLon).title(location))
         myMap.moveCamera(CameraUpdateFactory.newLatLng(latLon))
         myMap.moveCamera(CameraUpdateFactory.zoomTo(10f))
@@ -68,20 +74,27 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         myMap.clear()
     }
 
+    fun stopLoading() {
+        _loadingScreen.value = false
+    }
+
+
     fun returnIpAddress(ip: String) {
         _loadingScreen.value = false
+        _error.value = false
 
         uiScope.launch {
             try {
-                _ipAddress.value = repository.getData(ip)
+                _ipAddress.value = repository.getIp(ip)
                 _loadingScreen.value = true
 
             } catch (e: Exception) {
-                showLogError(e.localizedMessage!!)
-                e.printStackTrace()
+                Timber.e(e.message)
+                _errorMessage.value = e.message
                 _ipAddress.value = null
+                _error.value = true
 
-                _loadingScreen.value = true
+                _loadingScreen.value = false
 
             }
         }
@@ -96,7 +109,7 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            textView.text =  value
+            textView.text = value
         }
 
     }
@@ -115,14 +128,9 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
-    private fun showLogError(message: String) {
-        Log.e(TAG, message)
-
-    }
-
     override fun onCleared() {
         super.onCleared()
-        Log.d(TAG, "UI Scope canceled")
+        Timber.e("Ui scope canceled")
         uiScope.cancel()
     }
 

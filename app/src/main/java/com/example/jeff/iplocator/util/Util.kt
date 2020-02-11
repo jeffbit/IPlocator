@@ -5,11 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.jeff.iplocator.R
-import java.net.Inet4Address
-import java.net.InetAddress
-import java.net.NetworkInterface
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 fun validateIpAddress(ip: String): Boolean {
@@ -47,26 +43,8 @@ fun convertTime(time: String): String? {
 }
 
 
-//TODO: get mobile cellular address, currently this gets private address on mobile device
-fun getMobileIp(): String {
-    try {
-        val interfaces: List<NetworkInterface> =
-            Collections.list(NetworkInterface.getNetworkInterfaces())
-        for (intf in interfaces) {
-            val addrs: List<InetAddress> = Collections.list(intf.inetAddresses)
-            for (addr in addrs) {
-                if (!addr.isLoopbackAddress && addr is Inet4Address) {
-                    val sAddr: String = addr.hostAddress
-                    return sAddr
-                }
-            }
-        }
+//In Future get mobile cellular address
 
-    } catch (e: Exception) {
-
-    }
-    return ""
-}
 
 
 

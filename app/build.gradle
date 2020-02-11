@@ -40,10 +40,10 @@ android {
 def gson_version = "2.6.2"
 def retrofit2_version = "2.5.0"
 def okhttp3_version = "3.12.0"
-def kotlinCoroutineVersion = "1.0.1"
-def livedata_ktx = "2.2.0"
+def kotlin_coroutine_version = "1.0.1"
+def livedata_ktx_version = "2.2.0"
 def koin_version = "2.0.1"
-def navigation = "2.2.0"
+def navigation_version = "2.2.1"
 
 
 dependencies {
@@ -80,17 +80,14 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
 
 
-    //rxjava
 
 
     //Kotlin Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutine_version"
 
     //Coroutines Livedata
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx"
-    implementation "androidx.navigation:navigation-fragment-ktx:$livedata_ktx"
-    implementation "androidx.navigation:navigation-ui-ktx:$livedata_ktx"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx_version"
 
     //Koin for DI
     implementation "org.koin:koin-core:$koin_version"
@@ -100,14 +97,18 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
+
+    //Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }

@@ -1,11 +1,11 @@
 package com.example.jeff.iplocator.network
 
-import android.util.Log
 import com.example.jeff.iplocator.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 //creates Api
 object RetrofitClientInstance {
@@ -25,10 +25,9 @@ object RetrofitClientInstance {
     val okHttpClient = OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
 
     val ipApi: IPAddressAPIService by lazy {
-        Log.e("RetrofitCall", "Creating Client")
+        Timber.e( "Call created")
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
-        Log.e("RETROFIT_CLIENT", okHttpClient.authenticator().toString())
 
         return@lazy retrofit.create(IPAddressAPIService::class.java)
     }
