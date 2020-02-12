@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.jeff.iplocator.R
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 
 
 fun validateIpAddress(ip: String): Boolean {
@@ -34,11 +34,11 @@ fun loadImageToDisplay(
     }
 }
 
-//TODO: format api string date
-@SuppressLint("NewApi")
+@SuppressLint("SimpleDateFormat")
 fun convertTime(time: String): String? {
-    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-    val converted = time.format(format)
+    val parser = SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss")
+    val formatter = SimpleDateFormat("MM.dd.yyyy HH:mm")
+    val converted = formatter.format(parser.parse(time))
     return converted
 }
 

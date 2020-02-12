@@ -10,4 +10,5 @@ interface IPAddressAPIService {
     @GET("{ip}")
     suspend fun getIpAddress(@Path("ip") ipAddress: String): IpAddress
 
+
 }

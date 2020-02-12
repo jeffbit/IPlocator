@@ -37,7 +37,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         inflater.inflate(R.menu.options_menu, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
         val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Enter IP"
+        searchView.queryHint = getString(R.string.enter_ip)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -86,8 +86,8 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        flag_imageview.visibility = View.GONE
-        hideView()
+
+        hideMapInfo()
         observeResult()
 
 
@@ -95,7 +95,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun observeResult() {
-        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
+        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is Result.Loading -> {
                     showProgressBar()
@@ -103,22 +103,16 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
                 is Result.Success -> {
                     loadData(it.data)
                     hideProgressBar()
-                    showView()
                 }
                 is Result.Error -> {
-                    showError(it.throwable)
+                    showError(it.throwable.message.toString())
                     hideProgressBar()
-                    hideView()
+                    myViewModel.setIpAddressEmpty()
                 }
             }
         })
     }
 
-
-    private fun showError(error: Throwable) {
-        Toast.makeText(context, "${error.message}", Toast.LENGTH_SHORT).show();
-        myViewModel.setIpAddressEmpty()
-    }
 
     private fun enterOnClick(input: String) {
         if (validateIpAddress(input)) {
@@ -128,7 +122,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
             myViewModel.clearLatAndLon()
             observeResult()
         } else {
-            Toast.makeText(context, "NOT VALID", Toast.LENGTH_SHORT).show();
+            showError(getString(R.string.invalid_search))
         }
 
 
@@ -136,66 +130,73 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     private fun loadData(it: IpAddress) {
         myViewModel.displayMap(it.latitude, it.longitude, it.asn.name)
+
         //map cardview
         loadImageToDisplay(it.flag, flag_imageview, view!!, 60, 40)
-        myViewModel.hideTextviewIfNull(country_textview, it.countryName)
-        myViewModel.hideTextviewIfNull(
+        myViewModel.hideTextIfNull(country_textview, it.countryName)
+        myViewModel.hideTextIfNull(
             lat_textview,
             getString(R.string.lat, it.latitude.toString())
         )
-        myViewModel.hideTextviewIfNull(
+        myViewModel.hideTextIfNull(
             lon_textview,
             getString(R.string.lon, it.longitude.toString())
         )
 
         //location cardview
-        myViewModel.hideTextviewIfNull(
-            proxy_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            proxy_linearlayout,
             proxy_input_textview,
             it.threat.isProxy.toString()
         )
-        myViewModel.hideTextviewIfNull(
-            threat_time_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            threat_linearlayout,
             threat_input_textview,
             it.threat.isThreat.toString()
         )
-        myViewModel.hideTextviewIfNull(ipadress_textview, ip_input_textview, it.ip)
-        myViewModel.hideTextviewIfNull(isp_textView, isp_input_textview, it.asn.name)
-        myViewModel.hideTextviewIfNull(city_textview, city_input_textview, it.city)
-        myViewModel.hideTextviewIfNull(region_textview, region_input_textview, it.region)
-        myViewModel.hideTextviewIfNull(
-            country_textview,
+        myViewModel.hideLinearLayoutIfNull(ip_linearlayout, ip_input_textview, it.ip)
+        myViewModel.hideLinearLayoutIfNull(isp_linearlayout, isp_input_textview, it.asn.name)
+        myViewModel.hideLinearLayoutIfNull(city_linearlayout, city_input_textview, it.city)
+        myViewModel.hideLinearLayoutIfNull(region_linearlayout, region_input_textview, it.region)
+        myViewModel.hideLinearLayoutIfNull(
+            country_linearlayout,
             country_input_textview,
             it.countryName
         )
-        myViewModel.hideTextviewIfNull(
-            continentname_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            continent_linearlayout,
             continent_input_textview,
             it.continentName
         )
-        myViewModel.hideTextviewIfNull(postal_textview, postal_input_textview, it.postal)
-        myViewModel.hideTextviewIfNull(
-            language_textview,
+        myViewModel.hideLinearLayoutIfNull(postal_linearlayout, postal_input_textview, it.postal)
+        myViewModel.hideLinearLayoutIfNull(
+            language_linearlayout,
             language_input_textview,
             it.languages[0].name
         )
-        myViewModel.hideTextviewIfNull(
-            currency_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            currency_linearlayout,
             currency_input_textview,
             it.currency.name
         )
-        myViewModel.hideTextviewIfNull(
-            timezone_name_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            timezone_linearlayout,
             timezone_input_textview,
             it.timeZone.abbr
         )
-        myViewModel.hideTextviewIfNull(
-            current_time_textview,
+        myViewModel.hideLinearLayoutIfNull(
+            currentime_linearlayout,
             currenttime_input_textview,
             convertTime(it.timeZone.currentTime)
         )
     }
 
+
+    //Display Error
+    private fun showError(error: String) {
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+        myViewModel.setIpAddressEmpty()
+    }
 
     private fun showProgressBar() {
         search_progressBar.visibility = View.VISIBLE
@@ -207,30 +208,20 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun hideView() {
-        map_cardview.visibility = View.GONE
-        location_info_cardview.visibility = View.GONE
+    private fun hideMapInfo() {
+        flag_imageview.visibility = View.GONE
+        lat_textview.visibility = View.GONE
+        lon_textview.visibility = View.GONE
+
     }
-
-    private fun showView() {
-        map_cardview.visibility = View.VISIBLE
-        location_info_cardview.visibility = View.VISIBLE
-    }
-
-
-    //TODO: display empty textviews upon start, if ip is valid display textviews and map with informaiton, if invalid hide textviews and display error message
-
 
     override fun onMapReady(map: GoogleMap) {
         Timber.d("onMapReady")
         myViewModel.myMap = map
-        //puts marker before orientation change on map if value is not null
-        if (myViewModel.lat.value != null) {
+        //display marker after orientation change if value is not null
+        if (myViewModel.lat.value != null && myViewModel.lon.value != null) {
             myViewModel.displayMap(myViewModel.lat.value!!, myViewModel.lon.value!!)
         }
-
-
     }
-
 
 }

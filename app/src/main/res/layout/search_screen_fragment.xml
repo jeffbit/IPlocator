@@ -57,6 +57,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
+                            android:padding="4dp"
                             android:text="@string/country"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -74,7 +75,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/lon_textview"
@@ -127,15 +131,18 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
+                        android:padding="4dp"
                         android:paddingBottom="4dp"
                         android:text="@string/information"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/colorSecondary" />
 
                     <LinearLayout
+                        android:id="@+id/ip_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/ipadress_textview"
@@ -158,9 +165,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/threat_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/threat_time_textview"
@@ -178,15 +187,17 @@
 
                         <TextView
                             android:id="@+id/threat_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/proxy_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/proxy_textview"
@@ -204,22 +215,23 @@
 
                         <TextView
                             android:id="@+id/proxy_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/isp_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/isp_textView"
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0dp"
-                            android:layout_marginLeft="16dp"
                             android:fontFamily="sans-serif"
                             android:gravity="start"
                             android:paddingLeft="8dp"
@@ -231,22 +243,23 @@
 
                         <TextView
                             android:id="@+id/isp_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/city_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/city_textview"
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0dp"
-                            android:layout_marginLeft="16dp"
                             android:fontFamily="sans-serif"
                             android:gravity="start"
                             android:paddingLeft="8dp"
@@ -258,22 +271,23 @@
 
                         <TextView
                             android:id="@+id/city_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/region_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/region_textview"
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0dp"
-                            android:layout_marginLeft="16dp"
                             android:fontFamily="sans-serif"
                             android:gravity="start"
                             android:paddingLeft="8dp"
@@ -285,22 +299,23 @@
 
                         <TextView
                             android:id="@+id/region_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/country_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/countryname_textview"
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0dp"
-                            android:layout_marginLeft="16dp"
                             android:fontFamily="sans-serif"
                             android:gravity="start"
                             android:paddingLeft="8dp"
@@ -312,15 +327,17 @@
 
                         <TextView
                             android:id="@+id/country_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/continent_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/continentname_textview"
@@ -338,15 +355,17 @@
 
                         <TextView
                             android:id="@+id/continent_input_textview"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/postal_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/postal_textview"
@@ -364,15 +383,17 @@
 
                         <TextView
                             android:id="@+id/postal_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/language_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/language_textview"
@@ -390,15 +411,17 @@
 
                         <TextView
                             android:id="@+id/language_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/currency_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/currency_textview"
@@ -416,15 +439,17 @@
 
                         <TextView
                             android:id="@+id/currency_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/timezone_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/timezone_name_textview"
@@ -442,15 +467,17 @@
 
                         <TextView
                             android:id="@+id/timezone_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/currentime_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/current_time_textview"
@@ -468,7 +495,7 @@
 
                         <TextView
                             android:id="@+id/currenttime_input_textview"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
                     </LinearLayout>

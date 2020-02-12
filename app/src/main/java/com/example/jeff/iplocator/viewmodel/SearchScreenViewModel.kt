@@ -1,6 +1,7 @@
 package com.example.jeff.iplocator.viewmodel
 
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,17 +37,12 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         get() = _lon
 
 
-    private val _latLon = MutableLiveData<LatLng>()
-    val latLon: LiveData<LatLng>
-        get() = _latLon
-
-
     fun returnIpAddress(ip: String) {
         uiScope.launch {
             try {
                 _ipAddress.value = Result.Loading()
                 val req = repository.getIp(ip)
-                _ipAddress.value = Result.Success(repository.getIp(ip))
+                _ipAddress.value = Result.Success(req)
 
             } catch (e: Exception) {
                 _ipAddress.value = Result.Error(e)
@@ -54,9 +50,6 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun setIpAddressEmpty() {
-        _ipAddress.value = null
-    }
 
     fun displayMap(lat: Double, lon: Double, location: String? = R.string.isp.toString()) {
         _lat.value = lat
@@ -70,6 +63,10 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     }
 
+    fun setIpAddressEmpty() {
+        _ipAddress.value = null
+    }
+
     fun clearLatAndLon() {
         _lat.value = null
         _lon.value = null
@@ -79,8 +76,8 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         myMap.clear()
     }
 
-
-    fun hideTextviewIfNull(
+    //should  this be in viewmodel or view?
+    fun hideTextIfNull(
         textView: TextView,
         value: String?
     ) {
@@ -93,14 +90,13 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     }
 
-    fun hideTextviewIfNull(textViewTitle: TextView, textViewData: TextView, value: String?) {
+    //should  this be in viewmodel or view?
+    fun hideLinearLayoutIfNull(linearLayout: LinearLayout, textViewData: TextView, value: String?) {
         if (value.isNullOrEmpty()) {
-            textViewTitle.visibility = View.GONE
-            textViewData.visibility = View.GONE
+            linearLayout.visibility = View.GONE
 
         } else {
-            textViewTitle.visibility = View.VISIBLE
-            textViewData.visibility = View.VISIBLE
+            linearLayout.visibility = View.VISIBLE
             textViewData.text = value
         }
 
@@ -112,9 +108,6 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
         Timber.e("Ui scope canceled")
         uiScope.cancel()
     }
-
-//Todo: create error message to display over view if ip is not valid. hide everything in view besides error message to be displayed
-
 
 }
 

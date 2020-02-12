@@ -1,9 +1,6 @@
 package com.example.jeff.iplocator.util
 
 import android.app.Application
-import com.example.jeff.iplocator.util.networkModule
-import com.example.jeff.iplocator.util.retrofitClientModule
-import com.example.jeff.iplocator.util.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,7 +13,7 @@ class App : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(listOf(networkModule, viewModelModule, retrofitClientModule))
+            modules(listOf(networkModule, viewModelSearchScreen, retrofitClientModule))
 
         }
     }
