@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Repository
@@ -14,14 +15,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     lateinit var myMap: GoogleMap
-    private val viewModelJob = SupervisorJob()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
     private val _ipAddress = MutableLiveData<Result<IpAddress>>()
@@ -38,14 +37,14 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
 
     fun returnIpAddress(ip: String) {
-        uiScope.launch {
+        viewModelScope.launch {
             try {
                 _ipAddress.value = Result.Loading()
                 val req = repository.getIp(ip)
-                _ipAddress.value = Result.Success(req)
 
+                _ipAddress.postValue(Result.Success(req))
             } catch (e: Exception) {
-                _ipAddress.value = Result.Error(e)
+                _ipAddress.postValue(Result.Error(e))
             }
         }
     }
@@ -64,12 +63,13 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun setIpAddressEmpty() {
-        _ipAddress.value = null
+        _ipAddress.postValue(null)
     }
 
     fun clearLatAndLon() {
         _lat.value = null
         _lon.value = null
+
     }
 
     fun clearMap() {
@@ -102,12 +102,6 @@ class SearchScreenViewModel(private val repository: Repository) : ViewModel() {
 
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-        Timber.e("Ui scope canceled")
-        uiScope.cancel()
-    }
 
 }
 

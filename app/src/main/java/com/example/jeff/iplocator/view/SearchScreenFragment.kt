@@ -96,6 +96,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     private fun observeResult() {
         myViewModel.ipAddress.observe(viewLifecycleOwner, Observer { it ->
+
             when (it) {
                 is Result.Loading -> {
                     showProgressBar()
@@ -109,6 +110,7 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
                     hideProgressBar()
                     myViewModel.setIpAddressEmpty()
                 }
+
             }
         })
     }
@@ -123,6 +125,8 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
             observeResult()
         } else {
             showError(getString(R.string.invalid_search))
+            myViewModel.setIpAddressEmpty()
+            observeResult()
         }
 
 
