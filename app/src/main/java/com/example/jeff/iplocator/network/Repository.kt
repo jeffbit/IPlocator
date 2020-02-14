@@ -1,19 +1,16 @@
 package com.example.jeff.iplocator.network
 
 import com.example.jeff.iplocator.model.IpAddress
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.Response
 import timber.log.Timber
 
 class Repository(
-    private val retrofitClient: RetrofitClientInstance) {
+    private val retrofitClient: RetrofitClientInstance
+) {
 
 
     suspend fun getIp(ip: String): IpAddress {
         Timber.e("Get IP: %s", ip)
         return retrofitClient.ipApi.getIpAddress(ip)
-
 
 
     }

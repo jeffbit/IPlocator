@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
@@ -11,7 +11,11 @@
     <ScrollView
         android:id="@+id/searchscreen_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,78 +32,85 @@
                 android:elevation="4dp"
                 app:cardCornerRadius="4dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
 
-                    <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/map_constraintlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_margin="4dp">
+
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/flag_imageview"
+                        android:layout_width="48dp"
+                        android:layout_height="30dp"
+                        android:contentDescription="@string/todo"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_launcher_round"
+                        app:layout_constraintBottom_toTopOf="@+id/mapview_fragment"
+                        app:layout_constraintEnd_toEndOf="@+id/country_textview"
+                        app:layout_constraintHorizontal_bias="0.048"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/country_textview"
+                        app:layout_constraintVertical_bias="0.222" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/country_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/country"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:layout_editor_absoluteX="0dp" />
 
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/lon_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="end"
+                        android:text="@string/lon"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.867"
+                        app:layout_constraintStart_toEndOf="@+id/lat_textview" />
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/flag_imageview"
-                            android:layout_width="48dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:contentDescription="@string/todo"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_launcher_round" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/country_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:gravity="center"
-                            android:padding="4dp"
-                            android:text="@string/country"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-
-                    </RelativeLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/lat_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/lat"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.046"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <fragment
                         android:id="@+id/mapview_fragment"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:layout_margin="4dp" />
+                        app:layout_constraintBottom_toTopOf="@+id/lon_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/country_textview"
+                        app:layout_constraintVertical_bias="0.444" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:gravity="center"
-                        android:padding="4dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp">
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/lon_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:gravity="end"
-                            android:text="@string/lon"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/lat_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/lat"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                    </RelativeLayout>
-
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -112,394 +123,464 @@
                 android:elevation="2dp"
                 app:cardCornerRadius="4dp">
 
-                <ProgressBar
-                    android:id="@+id/search_progressBar"
-                    style="?android:attr/progressBarStyle"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/information_constraint"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:progress="1"
-                    android:visibility="gone" />
+                    android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/search_progressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progress="1"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/information_title_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:padding="4dp"
                         android:paddingBottom="4dp"
                         android:text="@string/information"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorSecondary" />
+                        android:textColor="@color/colorSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                    <LinearLayout
-                        android:id="@+id/ip_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/ipaddress_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/ip_address"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/threat_time_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/ip_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/information_title_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/ipadress_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/ip_address"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/ip_input_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/ip_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/ipaddress_textview"
+                        app:layout_constraintBottom_toTopOf="@+id/threat_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ipaddress_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/information_title_textview"
+                        app:layout_constraintVertical_bias="0.857" />
 
-                    <LinearLayout
-                        android:id="@+id/threat_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/threat_time_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/threat"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/proxy_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/threat_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ipaddress_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/threat_time_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/threat"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/threat_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/proxy_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/threat_time_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/ipaddress_textview" />
 
-                        <TextView
-                            android:id="@+id/threat_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/proxy_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/proxy_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/proxy"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/isp_textView"
+                        app:layout_constraintEnd_toStartOf="@+id/proxy_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/threat_time_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/proxy_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/proxy"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/proxy_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/isp_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/proxy_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/threat_time_textview" />
 
-                        <TextView
-                            android:id="@+id/proxy_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/isp_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/isp_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/isp"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/city_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/isp_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/proxy_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/isp_textView"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/isp"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/isp_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/city_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/isp_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/proxy_textview" />
 
-                        <TextView
-                            android:id="@+id/isp_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/city_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/city_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/city"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/region_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/city_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/isp_textView" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/city_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/city"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/city_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/city_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/region_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/city_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/isp_textView"
+                        app:layout_constraintVertical_bias="0.166" />
 
-                    <LinearLayout
-                        android:id="@+id/region_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/region_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/region"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/countryname_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/region_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/city_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/region_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/region"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/region_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/region_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/country_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/region_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/city_textview"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                    <LinearLayout
-                        android:id="@+id/country_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/countryname_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/country"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/continentname_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/country_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/region_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/countryname_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/country"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/country_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/country_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/continent_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/countryname_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/region_textview"
+                        app:layout_constraintVertical_bias="0.166" />
 
-                    <LinearLayout
-                        android:id="@+id/continent_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/continentname_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/continent"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/postal_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/continent_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/countryname_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/continentname_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/continent"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/continent_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/continent_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/postal_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/continentname_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/countryname_textview"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                    <LinearLayout
-                        android:id="@+id/postal_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/postal_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/postal_code"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/language_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/postal_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/continentname_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/postal_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/postal_code"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/postal_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/postal_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/language_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/postal_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/continentname_textview"
+                        app:layout_constraintVertical_bias="1.0" />
 
-                    <LinearLayout
-                        android:id="@+id/language_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/language_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/language"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/currency_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/language_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/postal_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/language_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/language"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/language_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/language_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/currency_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/language_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/postal_textview"
+                        app:layout_constraintVertical_bias="0.333" />
 
-                    <LinearLayout
-                        android:id="@+id/currency_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/currency_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/currency"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/current_time_textview"
+                        app:layout_constraintEnd_toStartOf="@+id/currency_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/language_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/currency_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/currency"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/currency_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/currency_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/currenttime_input_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/currency_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/language_textview" />
 
-                    <LinearLayout
-                        android:id="@+id/timezone_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/timezone_name_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/timezone"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/timezone_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/current_time_textview"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/timezone_name_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/timezone"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                        <TextView
-                            android:id="@+id/timezone_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/timezone_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/timezone_name_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/currency_textview" />
 
-                    <LinearLayout
-                        android:id="@+id/currentime_linearlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="10dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/currenttime_input_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/current_time_textview"
+                        app:layout_constraintTop_toBottomOf="@+id/currency_input_textview" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/current_time_textview"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="4dp"
-                            android:text="@string/current_time"
-                            android:textAlignment="inherit"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/current_time_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/current_time"
+                        android:textAlignment="inherit"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/currenttime_input_textview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/currency_textview" />
 
-                        <TextView
-                            android:id="@+id/currenttime_input_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>

@@ -3,6 +3,7 @@ package com.example.jeff.iplocator.view
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,11 +13,13 @@ import com.example.jeff.iplocator.model.IpAddress
 import com.example.jeff.iplocator.network.Result
 import com.example.jeff.iplocator.util.convertTime
 import com.example.jeff.iplocator.util.loadImageToDisplay
-import com.example.jeff.iplocator.util.validateIpAddress
 import com.example.jeff.iplocator.viewmodel.SearchScreenViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.search_screen_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -25,10 +28,11 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     private val myViewModel by viewModel<SearchScreenViewModel>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        //todo: call observe viewmodel in oncreate so its always observing the viewmodel class
+
 
     }
 
@@ -80,16 +84,13 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         val mapFragment: SupportMapFragment? =
             childFragmentManager.findFragmentById(R.id.mapview_fragment) as SupportMapFragment
         mapFragment?.getMapAsync(this)
-
+        observeResult()
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         hideMapInfo()
-        observeResult()
-
 
     }
 
@@ -110,86 +111,50 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
                     hideProgressBar()
                     myViewModel.setIpAddressEmpty()
                 }
+                is Result.NullValue -> {
+                    showError("Null value")
+                    hideProgressBar()
+                    myViewModel.setIpAddressEmpty()
+                }
 
             }
         })
     }
 
 
+    //Todo: add validation to viewmodel clas
     private fun enterOnClick(input: String) {
-        if (validateIpAddress(input)) {
-            myViewModel.returnIpAddress(ip = input)
-            //clears previous map lat and lon along with markers
-            myViewModel.clearMap()
-            myViewModel.clearLatAndLon()
-            observeResult()
-        } else {
-            showError(getString(R.string.invalid_search))
-            myViewModel.setIpAddressEmpty()
-            observeResult()
-        }
+        myViewModel.returnIpAddress(ip = input)
+        //clears previous map lat and lon along with markers
+        myViewModel.clearLatAndLon()
+        observeResult()
 
 
     }
 
     private fun loadData(it: IpAddress) {
-        myViewModel.displayMap(it.latitude, it.longitude, it.asn.name)
 
         //map cardview
         loadImageToDisplay(it.flag, flag_imageview, view!!, 60, 40)
-        myViewModel.hideTextIfNull(country_textview, it.countryName)
-        myViewModel.hideTextIfNull(
-            lat_textview,
-            getString(R.string.lat, it.latitude.toString())
-        )
-        myViewModel.hideTextIfNull(
-            lon_textview,
-            getString(R.string.lon, it.longitude.toString())
-        )
+        hideTextIfNull(null, country_textview, it.countryName)
+        hideTextIfNull(null, lon_textview, getString(R.string.lon, it.longitude.toString()))
+        hideTextIfNull(null, lat_textview, getString(R.string.lat, it.latitude.toString()))
 
         //location cardview
-        myViewModel.hideLinearLayoutIfNull(
-            proxy_linearlayout,
-            proxy_input_textview,
-            it.threat.isProxy.toString()
-        )
-        myViewModel.hideLinearLayoutIfNull(
-            threat_linearlayout,
-            threat_input_textview,
-            it.threat.isThreat.toString()
-        )
-        myViewModel.hideLinearLayoutIfNull(ip_linearlayout, ip_input_textview, it.ip)
-        myViewModel.hideLinearLayoutIfNull(isp_linearlayout, isp_input_textview, it.asn.name)
-        myViewModel.hideLinearLayoutIfNull(city_linearlayout, city_input_textview, it.city)
-        myViewModel.hideLinearLayoutIfNull(region_linearlayout, region_input_textview, it.region)
-        myViewModel.hideLinearLayoutIfNull(
-            country_linearlayout,
-            country_input_textview,
-            it.countryName
-        )
-        myViewModel.hideLinearLayoutIfNull(
-            continent_linearlayout,
-            continent_input_textview,
-            it.continentName
-        )
-        myViewModel.hideLinearLayoutIfNull(postal_linearlayout, postal_input_textview, it.postal)
-        myViewModel.hideLinearLayoutIfNull(
-            language_linearlayout,
-            language_input_textview,
-            it.languages[0].name
-        )
-        myViewModel.hideLinearLayoutIfNull(
-            currency_linearlayout,
-            currency_input_textview,
-            it.currency.name
-        )
-        myViewModel.hideLinearLayoutIfNull(
-            timezone_linearlayout,
-            timezone_input_textview,
-            it.timeZone.abbr
-        )
-        myViewModel.hideLinearLayoutIfNull(
-            currentime_linearlayout,
+        hideTextIfNull(ipaddress_textview, ip_input_textview, it.ip)
+        hideTextIfNull(threat_time_textview, threat_input_textview, it.threat.isThreat.toString())
+        hideTextIfNull(proxy_textview, proxy_input_textview, it.threat.isProxy.toString())
+        hideTextIfNull(isp_textView, isp_input_textview, it.asn.name)
+        hideTextIfNull(city_textview, city_input_textview, it.city)
+        hideTextIfNull(region_textview, region_input_textview, it.region)
+        hideTextIfNull(countryname_textview, country_input_textview, it.countryName)
+        hideTextIfNull(continentname_textview, continent_input_textview, it.continentName)
+        hideTextIfNull(postal_textview, postal_input_textview, it.postal)
+        hideTextIfNull(language_textview, language_input_textview, it.languages[0].name)
+        hideTextIfNull(currency_textview, currency_input_textview, it.currency.name)
+        hideTextIfNull(timezone_name_textview, timezone_input_textview, it.timeZone.name)
+        hideTextIfNull(
+            current_time_textview,
             currenttime_input_textview,
             convertTime(it.timeZone.currentTime)
         )
@@ -200,6 +165,21 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
     private fun showError(error: String) {
         Toast.makeText(context, error, Toast.LENGTH_LONG).show();
         myViewModel.setIpAddressEmpty()
+    }
+
+
+    private fun hideTextIfNull(
+        textView1: TextView? = null, textView2: TextView,
+        value: String?
+    ) {
+        if (value.isNullOrEmpty()) {
+            textView1?.visibility = View.GONE
+            textView2.visibility = View.GONE
+        } else {
+            textView1?.visibility = View.VISIBLE
+            textView2.visibility = View.VISIBLE
+            textView2.text = value
+        }
     }
 
     private fun showProgressBar() {
@@ -219,13 +199,33 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+
     override fun onMapReady(map: GoogleMap) {
         Timber.d("onMapReady")
-        myViewModel.myMap = map
-        //display marker after orientation change if value is not null
-        if (myViewModel.lat.value != null && myViewModel.lon.value != null) {
-            myViewModel.displayMap(myViewModel.lat.value!!, myViewModel.lon.value!!)
-        }
+        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Result.Success -> {
+                    map.addMarker(
+                        MarkerOptions().position(
+                            LatLng(it.data.latitude, it.data.longitude)
+                        ).title(it.data.asn.name)
+                    )
+                    map.moveCamera(
+                        CameraUpdateFactory
+                            .newLatLngZoom(LatLng(it.data.latitude, it.data.longitude), 10f)
+                    )
+                }
+                is Result.Error -> {
+                    map.clear()
+                    myViewModel.clearLatAndLon()
+
+                }
+
+
+            }
+        })
+
     }
+
 
 }

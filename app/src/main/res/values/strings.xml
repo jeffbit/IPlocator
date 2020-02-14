@@ -1,30 +1,29 @@
 <resources>
     <string name="app_name">IPLocator</string>
-    <string name="search_error">ERROR WITH SEARCH. TRY AGAIN</string>
+    <string name="search_error">Error with search. Try again</string>
     <string name="search">Search</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
     <string name="information">Information</string>
-    <string name="ip_address">IP Address</string>
+    <string name="ip_address">IP address</string>
     <string name="continent">Continent</string>
     <string name="country">Country</string>
-    <string name="postal_code">Postal Code</string>
+    <string name="postal_code">Postal code</string>
     <string name="currency">Currency</string>
     <string name="timezone">Timezone</string>
     <string name="region">Region</string>
     <string name="city">City</string>
-    <string name="current_time">Current Time</string>
+    <string name="current_time">Current time</string>
     <string name="lon">LON: %s</string>
     <string name="lat">LAT: %s</string>
     <string name="language">Language</string>
     <string name="offset">Offset</string>
     <string name="isp">ISP</string>
     <string name="todo">TODO</string>
-    <string name="proxy">proxy</string>
-    <string name="threat">threat</string>
-    <string name="enter_ip">Enter IP Address</string>
+    <string name="proxy">Proxy</string>
+    <string name="threat">Threat</string>
+    <string name="enter_ip">Enter IP address</string>
     <string name="invalid_search">Invalid search</string>
     <string name="about_ipdata"> Application uses ipdata.com api. ipdata.co is a Fast,
-        Reliable and Clean service that allows you to look up the location of an IP Address and other data.</string>
-<string name="education_use_only"> Application is for educational use only.</string>
+        Reliable and Clean service that allows you to look up the location of an IP Address and other data. Application is for educational use only. </string>
 </resources>
