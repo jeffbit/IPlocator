@@ -141,21 +141,21 @@ class SearchScreenFragment : Fragment(), OnMapReadyCallback {
         hideTextIfNull(null, lat_textview, getString(R.string.lat, it.latitude.toString()))
 
         //location cardview
-        hideTextIfNull(ipaddress_textview, ip_input_textview, it.ip)
-        hideTextIfNull(threat_time_textview, threat_input_textview, it.threat.isThreat.toString())
-        hideTextIfNull(proxy_textview, proxy_input_textview, it.threat.isProxy.toString())
-        hideTextIfNull(isp_textView, isp_input_textview, it.asn.name)
-        hideTextIfNull(city_textview, city_input_textview, it.city)
-        hideTextIfNull(region_textview, region_input_textview, it.region)
-        hideTextIfNull(countryname_textview, country_input_textview, it.countryName)
-        hideTextIfNull(continentname_textview, continent_input_textview, it.continentName)
-        hideTextIfNull(postal_textview, postal_input_textview, it.postal)
-        hideTextIfNull(language_textview, language_input_textview, it.languages[0].name)
-        hideTextIfNull(currency_textview, currency_input_textview, it.currency.name)
-        hideTextIfNull(timezone_name_textview, timezone_input_textview, it.timeZone.name)
+        hideTextIfNull(ip_title, ip_input, it.ip)
+        hideTextIfNull(threat_title, threat_input, it.threat.isThreat.toString())
+        hideTextIfNull(proxy_title, proxy_input, it.threat.isProxy.toString())
+        hideTextIfNull(isp_title, isp_input, it.asn.name)
+        hideTextIfNull(city_title, city_input, it.city)
+        hideTextIfNull(region_title, region_input, it.region)
+        hideTextIfNull(country_title, country_input, it.countryName)
+        hideTextIfNull(continent_title, continent_input, it.continentName)
+        hideTextIfNull(postalcode_title, postalcode_input, it.postal)
+        hideTextIfNull(language_title, language_input, it.languages[0].name)
+        hideTextIfNull(currency_title, currency_input, it.currency.name)
+        hideTextIfNull(timezone_title, timezone_input, it.timeZone.name)
         hideTextIfNull(
-            current_time_textview,
-            currenttime_input_textview,
+            currenttime_title,
+            currenttime_input,
             convertTime(it.timeZone.currentTime)
         )
     }
