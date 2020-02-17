@@ -2,8 +2,7 @@ package com.example.jeff.iplocator.util
 
 import com.example.jeff.iplocator.network.Repository
 import com.example.jeff.iplocator.network.RetrofitClientInstance
-import com.example.jeff.iplocator.viewmodel.AboutScreenViewModel
-import com.example.jeff.iplocator.viewmodel.SearchScreenViewModel
+import com.example.jeff.iplocator.viewmodel.ResultScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,7 +16,7 @@ val networkModule = module {
 //get() will resolve repository instance
 
 val viewModelSearchScreen = module {
-    viewModel { SearchScreenViewModel(get()) }
+    viewModel { ResultScreenViewModel(get()) }
 }
 
 val retrofitClientModule = module {

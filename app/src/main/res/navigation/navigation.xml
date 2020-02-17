@@ -6,13 +6,16 @@
     app:startDestination="@id/searchScreenFragment">
 
     <fragment
-        android:id="@+id/searchScreenFragment"
-        android:name="com.example.jeff.iplocator.view.SearchScreenFragment"
+        android:id="@+id/resultScreenFragment"
+        android:name="com.example.jeff.iplocator.view.ResultScreenFragment"
         android:label="Search"
-        tools:layout="@layout/search_screen_fragment">
+        tools:layout="@layout/result_screen_fragment">
         <action
-            android:id="@+id/action_searchScreenFragment_to_aboutScreenFragment"
+            android:id="@+id/action_resultScreenFragment_to_aboutScreenFragment"
             app:destination="@id/aboutScreenFragment" />
+        <argument
+            android:name="searchQuery"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/aboutScreenFragment"
@@ -20,7 +23,22 @@
         android:label="About"
         tools:layout="@layout/about_screen_fragment">
         <action
+            android:id="@+id/action_aboutScreenFragment_to_resultScreenFragment"
+            app:destination="@id/resultScreenFragment" />
+        <action
             android:id="@+id/action_aboutScreenFragment_to_searchScreenFragment"
             app:destination="@id/searchScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchScreenFragment"
+        android:name="com.example.jeff.iplocator.view.SearchScreenFragment"
+        android:label="search_screen_fragment"
+        tools:layout="@layout/search_screen_fragment" >
+        <action
+            android:id="@+id/action_searchScreenFragment_to_resultScreenFragment"
+            app:destination="@id/resultScreenFragment" />
+        <action
+            android:id="@+id/action_searchScreenFragment_to_aboutScreenFragment"
+            app:destination="@id/aboutScreenFragment" />
     </fragment>
 </navigation>
