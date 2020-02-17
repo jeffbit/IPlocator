@@ -38,12 +38,9 @@ fun loadImageToDisplay(
 fun convertTime(time: String): String? {
     val parser = SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss")
     val formatter = SimpleDateFormat("MM.dd.yyyy HH:mm")
-    val converted = formatter.format(parser.parse(time))
-    return converted
+    return formatter.format(parser.parse(time))
 }
 
-
-//In Future get mobile cellular address
 
 
 

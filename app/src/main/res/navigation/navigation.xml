@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/resultScreenFragment"
         android:name="com.example.jeff.iplocator.view.ResultScreenFragment"
-        android:label="Search"
+        android:label="Location"
         tools:layout="@layout/result_screen_fragment">
         <action
             android:id="@+id/action_resultScreenFragment_to_aboutScreenFragment"
@@ -16,6 +16,9 @@
         <argument
             android:name="searchQuery"
             app:argType="string" />
+        <action
+            android:id="@+id/action_resultScreenFragment_to_searchScreenFragment"
+            app:destination="@id/searchScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutScreenFragment"
@@ -32,8 +35,8 @@
     <fragment
         android:id="@+id/searchScreenFragment"
         android:name="com.example.jeff.iplocator.view.SearchScreenFragment"
-        android:label="search_screen_fragment"
-        tools:layout="@layout/search_screen_fragment" >
+        android:label="IPLocator"
+        tools:layout="@layout/search_screen_fragment">
         <action
             android:id="@+id/action_searchScreenFragment_to_resultScreenFragment"
             app:destination="@id/resultScreenFragment" />

@@ -1,5 +1,7 @@
 package com.example.jeff.iplocator.view
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -30,7 +32,6 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        //todo: call observe viewmodel in oncreate so its always observing the viewmodel class
 
 
     }
@@ -38,21 +39,6 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
-//        val searchItem = menu.findItem(R.id.app_bar_search)
-//        val searchView = searchItem.actionView as SearchView
-//        searchView.queryHint = getString(R.string.enter_ip)
-//
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                enterOnClick(query!!)
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                return false
-//            }
-//        })
-
         super.onCreateOptionsMenu(menu, inflater)
 
     }
@@ -91,10 +77,36 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        Timber.d("onMapReady")
+        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Result.Success -> {
+                    map.addMarker(
+                        MarkerOptions().position(
+                            LatLng(it.data.latitude, it.data.longitude)
+                        ).title(it.data.asn.name)
+                    )
+                    map.moveCamera(
+                        CameraUpdateFactory
+                            .newLatLngZoom(LatLng(it.data.latitude, it.data.longitude), 10f)
+                    )
+                }
+                is Result.Error -> {
+                    map.clear()
+                    myViewModel.clearLatAndLon()
 
-    //move this fun to new searchscreen
+                }
+
+
+            }
+        })
+
+    }
+
+
     private fun observeResult() {
-        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer { it ->
+        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
 
             when (it) {
                 is Result.Loading -> {
@@ -106,21 +118,21 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
                 }
                 is Result.Error -> {
                     showError(it.throwable.message.toString())
+                    displayAlertDialog(
+                        context!!,
+                        getString(R.string.invalid_search),
+                        getString(R.string.address_notfound)
+                    )
                     hideProgressBar()
                     myViewModel.setIpAddressEmpty()
                 }
-                is Result.NullValue -> {
-                    showError("Null value")
-                    hideProgressBar()
-                    myViewModel.setIpAddressEmpty()
-                }
+
 
             }
         })
     }
 
 
-    //Todo: add validation to viewmodel clas
     private fun enterOnClick(input: String) {
         myViewModel.returnIpAddress(ip = input)
         //clears previous map lat and lon along with markers
@@ -161,7 +173,7 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
 
     //Display Error
     private fun showError(error: String) {
-        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         myViewModel.setIpAddressEmpty()
     }
 
@@ -198,32 +210,18 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    override fun onMapReady(map: GoogleMap) {
-        Timber.d("onMapReady")
-        myViewModel.ipAddress.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Result.Success -> {
-                    map.addMarker(
-                        MarkerOptions().position(
-                            LatLng(it.data.latitude, it.data.longitude)
-                        ).title(it.data.asn.name)
-                    )
-                    map.moveCamera(
-                        CameraUpdateFactory
-                            .newLatLngZoom(LatLng(it.data.latitude, it.data.longitude), 10f)
-                    )
-                }
-                is Result.Error -> {
-                    map.clear()
-                    myViewModel.clearLatAndLon()
-
-                }
-
-
+    private fun displayAlertDialog(context: Context, title: String, message: String) {
+        val alertDialog = AlertDialog.Builder(context)
+            .setTitle(title).setMessage(message)
+            .setNeutralButton(
+                "Try Again"
+            ) { dialog, which ->
+                val action =
+                    ResultScreenFragmentDirections.actionResultScreenFragmentToSearchScreenFragment()
+                Navigation.findNavController(view!!).navigate(action)
             }
-        })
+        alertDialog.create().show()
 
     }
-
 
 }

@@ -9,7 +9,7 @@ import timber.log.Timber
 
 //creates Api
 object RetrofitClientInstance {
-    private val BASE_URL =
+    private const val BASE_URL =
         "https://api.ipdata.co/"
 
     //adds api key to every query
@@ -22,7 +22,7 @@ object RetrofitClientInstance {
     }
 
     //builds request url
-    val okHttpClient = OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
+    private val okHttpClient = OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
 
     val ipApi: IPAddressAPIService by lazy {
         Timber.e( "Call created")

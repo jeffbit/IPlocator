@@ -1,9 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">IPLocator</string>
-    <string name="search_error">Error with search. Try again</string>
-    <string name="search">Search</string>
     <string name="about">About</string>
-    <string name="exit">Exit</string>
     <string name="information">Information</string>
     <string name="ip_address">IP address</string>
     <string name="continent">Continent</string>
@@ -17,13 +14,17 @@
     <string name="lon">LON: %s</string>
     <string name="lat">LAT: %s</string>
     <string name="language">Language</string>
-    <string name="offset">Offset</string>
+    <string name="offset" tools:keep="@string/offset">Offset</string>
     <string name="isp">ISP</string>
     <string name="todo">TODO</string>
     <string name="proxy">Proxy</string>
     <string name="threat">Threat</string>
     <string name="enter_ip">Enter IP address</string>
-    <string name="invalid_search">Invalid search</string>
     <string name="about_ipdata"> Application uses ipdata.com api. ipdata.co is a Fast,
         Reliable and Clean service that allows you to look up the location of an IP Address and other data. Application is for educational use only. </string>
+    <string name="invalid_search">Invalid Search</string>
+    <string name ="invalid_address">\'%s\' is not a valid public IP address</string>
+    <string name="null_search">Search query cannot be null</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="address_notfound">Address not found</string>
 </resources>

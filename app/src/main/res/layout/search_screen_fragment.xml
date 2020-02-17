@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/colorAccent"
-    tools:context=".SearchView">
+    tools:context="view.SearchScreenFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_search"
@@ -24,9 +24,10 @@
         <SearchView
             android:id="@+id/searchview_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </SearchView>
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:queryHint="@string/enter_ip"></SearchView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
