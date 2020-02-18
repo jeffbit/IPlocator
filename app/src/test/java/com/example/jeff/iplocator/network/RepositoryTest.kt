@@ -2,7 +2,10 @@ package com.example.jeff.iplocator.network
 
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Test
 
 class RepositoryTest {
 
@@ -18,6 +21,21 @@ class RepositoryTest {
 
     }
 
+    @Test
+    fun invalidIpAddress_returnNull() {
+        runBlocking {
+           whenever(mockRepository.getIp("10.56.16.4")).thenReturn(null)
+
+        }
+
+    }
+
+    @Test
+    fun invalidStringLookup_returnNull() {
+        runBlocking {
+            whenever(mockRepository.getIp("Test")).thenReturn(null)
+        }
+    }
 
 
 

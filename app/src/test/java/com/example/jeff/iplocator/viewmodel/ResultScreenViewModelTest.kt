@@ -1,16 +1,22 @@
 package com.example.jeff.iplocator.viewmodel
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.jeff.iplocator.network.Repository
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
-import org.junit.runner.RunWith
+import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class ResultScreenViewModelTest {
 
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var resultScreenViewModel: ResultScreenViewModel
@@ -25,7 +31,23 @@ class ResultScreenViewModelTest {
     }
 
 
+    @Test
+    fun invalidIpAddress_returnNull() {
+        runBlocking {
+            val result = repository.getIp("10.56.14.13")
 
+            Assert.assertEquals(result, null)
+
+        }
+
+    }
+
+    @Test
+    fun invalidStringLookup_returnNull() {
+        runBlocking {
+            whenever(repository.getIp("Test")).thenReturn(null)
+        }
+    }
 
 
 }
