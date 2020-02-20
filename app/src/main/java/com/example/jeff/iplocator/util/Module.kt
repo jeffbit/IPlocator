@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val networkModule = module {
     //single - depicts a singleton component
-    single { Repository(get()) }
+    single { Repository(RetrofitClientInstance.ipAddressAPIService) }
 }
 
 //viewModel helps declare a factory instance of viewmodel(factory - wil give you a new instance each time you ask for this object type)

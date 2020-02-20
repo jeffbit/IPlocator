@@ -2,6 +2,7 @@ package com.example.jeff.iplocator.view
 
 import android.app.AlertDialog
 import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
@@ -15,6 +16,7 @@ import com.example.jeff.iplocator.R
 import com.example.jeff.iplocator.util.validateIpAddress
 import com.example.jeff.iplocator.viewmodel.SearchScreenViewModel
 import kotlinx.android.synthetic.main.search_screen_fragment.*
+import timber.log.Timber
 
 class SearchScreenFragment : Fragment() {
 
@@ -87,33 +89,43 @@ class SearchScreenFragment : Fragment() {
 
     }
 
-    private fun searchQuery(query: String?) = if (query != null) {
-        if (validateIpAddress(query)) {
-            val action =
-                SearchScreenFragmentDirections.actionSearchScreenFragmentToResultScreenFragment(
-                    query
-                )
-            view?.findNavController()?.navigate(action)
-            searchview_search.setQuery(null, false)
-           clearSearchQuery()
+    private fun searchQuery(query: String?) {
+        if (query != null) {
+            if (validateIpAddress(query)) {
+                if (hasNetworkAvailable(context!!)) {
+                    displayAlertDialog(context!!, "Error", "No internet connection")
+                    clearSearchQuery()
 
+                } else {
+
+
+                    val action =
+                        SearchScreenFragmentDirections.actionSearchScreenFragmentToResultScreenFragment(
+                            query
+                        )
+                    view?.findNavController()?.navigate(action)
+                    searchview_search.setQuery(null, false)
+                    clearSearchQuery()
+                }
+
+
+            } else {
+
+                displayAlertDialog(
+                    context!!,
+                    getString(R.string.invalid_search),
+                    getString(R.string.invalid_address, query)
+                )
+                myViewModel.setSearchQuery(null)
+                clearSearchQuery()
+
+
+            }
 
         } else {
-
-            displayAlertDialog(
-                context!!,
-                getString(R.string.invalid_search),
-                getString(R.string.invalid_address, query)
-            )
-            myViewModel.setSearchQuery(null)
-            clearSearchQuery()
-
-
+            Toast.makeText(context, getString(R.string.null_search), Toast.LENGTH_SHORT)
+                .show()
         }
-
-    } else {
-        Toast.makeText(context, getString(R.string.null_search), Toast.LENGTH_SHORT)
-            .show()
     }
 
     private fun displayAlertDialog(context: Context, title: String, message: String) {
@@ -126,6 +138,14 @@ class SearchScreenFragment : Fragment() {
             }
         alertDialog.create().show()
 
+    }
+
+    private fun hasNetworkAvailable(context: Context): Boolean {
+        val service = Context.CONNECTIVITY_SERVICE
+        val manager = context.getSystemService(service) as ConnectivityManager?
+        val network = manager?.activeNetworkInfo
+        Timber.e("hasNetworkAvailable: ${(network != null)}")
+        return (network != null)
     }
 
     private fun clearSearchQuery() {

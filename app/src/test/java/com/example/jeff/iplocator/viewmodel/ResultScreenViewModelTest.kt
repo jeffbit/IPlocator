@@ -1,7 +1,9 @@
 package com.example.jeff.iplocator.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.jeff.iplocator.network.Repository
+import androidx.lifecycle.LiveData
+import com.example.jeff.iplocator.model.IpAddress
+import com.example.jeff.iplocator.network.*
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import kotlinx.coroutines.runBlocking
@@ -9,8 +11,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 
 class ResultScreenViewModelTest {
 
@@ -18,36 +18,56 @@ class ResultScreenViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    @Mock
-    lateinit var resultScreenViewModel: ResultScreenViewModel
-    lateinit var repository: Repository
+
+
+    private lateinit var mockRetrofitClientInstance: RetrofitClientInstance
+    private lateinit var mockRepository: Repository
+    private lateinit var mockIPAddressAPIService: IPAddressAPIService
+    private lateinit var mockIpAddress: IpAddress
+    private lateinit var resultScreenViewModel: ResultScreenViewModel
+    private lateinit var mockLiveData : LiveData<Result<IpAddress>>
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
-        repository = mock()
-        this.resultScreenViewModel = ResultScreenViewModel(repository)
+        mockIPAddressAPIService = mock()
+        mockRetrofitClientInstance= mock()
+        mockIpAddress = mock()
+        mockRepository = mock()
+        resultScreenViewModel = ResultScreenViewModel(mockRepository)
+        mockLiveData = mock()
+
 
     }
 
 
     @Test
-    fun invalidIpAddress_returnNull() {
-        runBlocking {
-            val result = repository.getIp("10.56.14.13")
+    fun validIpAddress_returnSuccess() = runBlocking{
+        //given
+        val expectedResult = Result.Success(VALID_IP)
 
-            Assert.assertEquals(result, null)
+        //when
+        whenever(mockRepository.getIp(VALID_IP)).thenReturn(IP_RESPONSE)
 
-        }
+        //then
+        val result = resultScreenViewModel.returnIpAddress(VALID_IP)
+        Assert.assertEquals(expectedResult, result)
 
     }
 
-    @Test
-    fun invalidStringLookup_returnNull() {
-        runBlocking {
-            whenever(repository.getIp("Test")).thenReturn(null)
-        }
-    }
+
+//    @Test()
+//    fun invalidIpAddress_returnFailure() = runBlocking {
+//
+//        val resultLivedata = resultScreenViewModel.ipAddress.observeForever(kotlin.Result.failur()
+//        whenever(mockRepository.getIp(INVALID_IP)).thenReturn(null)
+//
+//            val result = resultScreenViewModel.returnIpAddress(INVALID_IP)
+//
+//            print(result)
+//            Assert.assertEquals(result, Exception())
+//        }
+
+
 
 
 }

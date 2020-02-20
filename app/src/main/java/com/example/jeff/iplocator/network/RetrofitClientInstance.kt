@@ -5,7 +5,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 
 //creates Api
 object RetrofitClientInstance {
@@ -24,13 +23,11 @@ object RetrofitClientInstance {
     //builds request url
     private val okHttpClient = OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
 
-    val ipApi: IPAddressAPIService by lazy {
-        Timber.e( "Call created")
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create()).build()
+     private fun retrofit(): Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create()).build()
 
-        return@lazy retrofit.create(IPAddressAPIService::class.java)
-    }
+    val ipAddressAPIService: IPAddressAPIService =
+        retrofit().create(IPAddressAPIService::class.java)
 
 
 }
