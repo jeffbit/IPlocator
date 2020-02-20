@@ -27,4 +27,6 @@
     <string name="null_search">Search query cannot be null</string>
     <string name="dismiss">Dismiss</string>
     <string name="address_notfound">Address not found</string>
+    <string name="error">Error</string>
+    <string name="no_internet">No internet connection</string>
 </resources>

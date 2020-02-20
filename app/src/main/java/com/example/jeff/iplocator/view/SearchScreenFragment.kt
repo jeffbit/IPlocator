@@ -92,8 +92,8 @@ class SearchScreenFragment : Fragment() {
     private fun searchQuery(query: String?) {
         if (query != null) {
             if (validateIpAddress(query)) {
-                if (hasNetworkAvailable(context!!)) {
-                    displayAlertDialog(context!!, "Error", "No internet connection")
+                if (!hasNetworkAvailable(context!!)) {
+                    displayAlertDialog(context!!, getString(R.string.error), getString(R.string.no_internet))
                     clearSearchQuery()
 
                 } else {
@@ -145,7 +145,7 @@ class SearchScreenFragment : Fragment() {
         val manager = context.getSystemService(service) as ConnectivityManager?
         val network = manager?.activeNetworkInfo
         Timber.e("hasNetworkAvailable: ${(network != null)}")
-        return (network != null)
+        return (network != null) && network.isConnected
     }
 
     private fun clearSearchQuery() {
