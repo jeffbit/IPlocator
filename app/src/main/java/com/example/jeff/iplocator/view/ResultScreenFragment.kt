@@ -168,6 +168,7 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
             currenttime_input,
             convertTime(it.timeZone.currentTime)
         )
+        Timber.e(it.timeZone.currentTime)
     }
 
 

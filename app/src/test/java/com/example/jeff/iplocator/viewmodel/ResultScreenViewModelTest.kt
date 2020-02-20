@@ -46,7 +46,7 @@ class ResultScreenViewModelTest {
         val expectedResult = Result.Success(VALID_IP)
 
         //when
-        whenever(mockRepository.getIp(VALID_IP)).thenReturn(IP_RESPONSE)
+        whenever(mockRepository.getIp(VALID_IP)).thenReturn(VALID_IP_RESPONSE)
 
         //then
         val result = resultScreenViewModel.returnIpAddress(VALID_IP)
@@ -55,17 +55,6 @@ class ResultScreenViewModelTest {
     }
 
 
-//    @Test()
-//    fun invalidIpAddress_returnFailure() = runBlocking {
-//
-//        val resultLivedata = resultScreenViewModel.ipAddress.observeForever(kotlin.Result.failur()
-//        whenever(mockRepository.getIp(INVALID_IP)).thenReturn(null)
-//
-//            val result = resultScreenViewModel.returnIpAddress(INVALID_IP)
-//
-//            print(result)
-//            Assert.assertEquals(result, Exception())
-//        }
 
 
 

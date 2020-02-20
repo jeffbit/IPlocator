@@ -4,7 +4,10 @@ import com.example.jeff.iplocator.model.*
 
 const val VALID_IP = "8.8.8.8"
 const val INVALID_IP = "temp"
-val IP_RESPONSE = IpAddress(
+const val VALID_TIME_INPUT = "2020-02-20T14:16:20.347071-06:00"
+const val VALID_TIME_CONVERT = "02.20.2020 14:16"
+
+val VALID_IP_RESPONSE = IpAddress(
     Asn(
         "AS15169",
         "Google LLC",

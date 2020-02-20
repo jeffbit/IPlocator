@@ -95,10 +95,7 @@ class SearchScreenFragment : Fragment() {
                 if (!hasNetworkAvailable(context!!)) {
                     displayAlertDialog(context!!, getString(R.string.error), getString(R.string.no_internet))
                     clearSearchQuery()
-
                 } else {
-
-
                     val action =
                         SearchScreenFragmentDirections.actionSearchScreenFragmentToResultScreenFragment(
                             query
@@ -107,7 +104,6 @@ class SearchScreenFragment : Fragment() {
                     searchview_search.setQuery(null, false)
                     clearSearchQuery()
                 }
-
 
             } else {
 
