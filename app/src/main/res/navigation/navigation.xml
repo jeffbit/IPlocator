@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/resultScreenFragment"
-        android:name="com.example.jeff.iplocator.view.ResultScreenFragment"
+        android:name="com.brown.jeff.iplocator.view.ResultScreenFragment"
         android:label="Location"
         tools:layout="@layout/result_screen_fragment">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutScreenFragment"
-        android:name="com.example.jeff.iplocator.view.AboutScreenFragment"
+        android:name="com.brown.jeff.iplocator.view.AboutScreenFragment"
         android:label="About"
         tools:layout="@layout/about_screen_fragment">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchScreenFragment"
-        android:name="com.example.jeff.iplocator.view.SearchScreenFragment"
+        android:name="com.brown.jeff.iplocator.view.SearchScreenFragment"
         android:label="IPLocator"
         tools:layout="@layout/search_screen_fragment">
         <action
