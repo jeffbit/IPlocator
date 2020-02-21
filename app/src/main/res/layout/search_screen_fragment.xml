@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/colorAccent"
-    tools:context="view.SearchScreenFragment">
+    tools:context="com.example.jeff.iplocator.view.SearchScreenFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_search"

@@ -20,7 +20,9 @@ class RepositoryTest {
     fun setup() {
         mockRetrofitClientInstance = mock()
         mockIPAddressAPIService = mock()
-        repository = Repository(mockIPAddressAPIService)
+        repository = Repository(
+            mockIPAddressAPIService
+        )
 
     }
 

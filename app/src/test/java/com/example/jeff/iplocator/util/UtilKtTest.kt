@@ -13,7 +13,8 @@ class UtilKtTest {
   fun validateIpAddress_returnTrue(){
         //given
         //when
-        val result = validateIpAddress(VALID_IP)
+        val result =
+            validateIpAddress(VALID_IP)
         //then
         Assert.assertTrue(result)
 
@@ -22,7 +23,8 @@ class UtilKtTest {
     fun validateIpAddress_returnFalse(){
         //given
         //when
-        val result = validateIpAddress(INVALID_IP)
+        val result =
+            validateIpAddress(INVALID_IP)
         //then
         Assert.assertFalse(result)
 

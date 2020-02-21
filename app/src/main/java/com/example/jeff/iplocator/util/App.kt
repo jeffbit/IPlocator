@@ -16,7 +16,11 @@ class App : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(listOf(networkModule, viewModelResultScreen, retrofitClientModule))
+            modules(listOf(
+                networkModule,
+                viewModelResultScreen,
+                retrofitClientModule
+            ))
 
 
         }

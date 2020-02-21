@@ -23,11 +23,14 @@ object RetrofitClientInstance {
     //builds request url
     private val okHttpClient = OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
 
-     private fun retrofit(): Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+     private fun retrofit(): Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(
+         okHttpClient
+     )
         .addConverterFactory(GsonConverterFactory.create()).build()
 
     val ipAddressAPIService: IPAddressAPIService =
-        retrofit().create(IPAddressAPIService::class.java)
+        retrofit()
+            .create(IPAddressAPIService::class.java)
 
 
 }

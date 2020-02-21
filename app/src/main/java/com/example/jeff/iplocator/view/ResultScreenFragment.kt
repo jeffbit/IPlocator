@@ -66,7 +66,9 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
             childFragmentManager.findFragmentById(R.id.mapview_fragment) as SupportMapFragment
         mapFragment?.getMapAsync(this)
 //        observeResult()
-        enterOnClick(arguments.let { ResultScreenFragmentArgs.fromBundle(it!!).searchQuery })
+        enterOnClick(arguments.let { ResultScreenFragmentArgs.fromBundle(
+            it!!
+        ).searchQuery })
 
         return view
     }
@@ -145,7 +147,13 @@ class ResultScreenFragment : Fragment(), OnMapReadyCallback {
     private fun loadData(it: IpAddress) {
 
         //map cardview
-        loadImageToDisplay(it.flag, flag_imageview, view!!, 60, 40)
+        loadImageToDisplay(
+            it.flag,
+            flag_imageview,
+            view!!,
+            60,
+            40
+        )
         hideTextIfNull(null, country_textview, it.countryName)
         hideTextIfNull(null, lon_textview, getString(R.string.lon, it.longitude.toString()))
         hideTextIfNull(null, lat_textview, getString(R.string.lat, it.latitude.toString()))

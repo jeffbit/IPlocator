@@ -4,6 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.example.jeff.iplocator.model.IpAddress
+import com.example.jeff.iplocator.network.IPAddressAPIService
+import com.example.jeff.iplocator.network.Repository
+import com.example.jeff.iplocator.network.Result
 import com.example.jeff.iplocator.network.*
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
@@ -22,7 +25,7 @@ import java.util.concurrent.TimeUnit
 class ResultScreenViewModelTest {
 
     //Testing in progress. Issue may be that in resultscreenviewmodel I am trying to treat livedata as a stream?
-    //Need to resetup viewmodel in order to properly test
+    //may need to rebuild viewmodel in order to properly test
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -39,7 +42,10 @@ class ResultScreenViewModelTest {
         mockIPAddressAPIService = mock()
         mockRepository = mock()
         mockObserver = mock()
-        resultScreenViewModel = ResultScreenViewModel(mockRepository)
+        resultScreenViewModel =
+            ResultScreenViewModel(
+                mockRepository
+            )
         Dispatchers.setMain(testDispatcher)
 
 
