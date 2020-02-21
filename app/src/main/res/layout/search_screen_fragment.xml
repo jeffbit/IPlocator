@@ -27,7 +27,8 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:queryHint="@string/enter_ip"></SearchView>
+            android:iconifiedByDefault="false"
+            android:queryHint="@string/enter_ip" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
