@@ -40,7 +40,7 @@ class RepositoryTest {
 
 
     @Test
-    fun invalidIpAddressSearch_returNull() = runBlocking {
+    fun invalidIpAddressSearch_returnNull() = runBlocking {
         //given
         whenever(mockIPAddressAPIService.getIpAddress(INVALID_IP)).thenReturn(null)
         //when
