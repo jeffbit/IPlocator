@@ -1,7 +1,7 @@
  <h3 align="center">IPLocator</h3>
 
   <p align="center">
-    Android Note application built using Kotlin and Jetpack libraries.
+    IPLocator Information lookup.
     <br />
     <a href="https://github.com/jeffbit/IPlocator"><strong>Explore the docs »</strong></a>
     <br />
@@ -20,6 +20,7 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
+* [Future Updates](#future-updates)
 * [Built With](#built-with)
 * [Screenshots](#screenshot)
 * [Contact](#contact)
@@ -28,8 +29,15 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-IPLocator allows the user to enter an IPaddress and it will send back the lat and lon on googlemaps, along with information about the address
-such as isp,country,city,region,name, timezone, coordinates.
+IPLocator allows the user to enter an IP address and it will send back the lat and lon on googlemaps, along with information about the address(isp,country,city,region,name, timezone, coordinates, threat, and proxy).
+
+<!--FUTURE UPDATES -->
+## Future Updates
+
+ will include recyclerview list of all recent address lookups
+ application will store data locally with room database
+ users will be able to retrieve information from recent searches/delete specific searches or delete all searches. 
+ User will also have the choice to disable saving any searches at all
 
 
 
@@ -58,7 +66,7 @@ such as isp,country,city,region,name, timezone, coordinates.
 
 <!--- SCREENSHOTS -->
 ## Screenshot
-[Project Screenshots](https://github.com/jeffbit/NoteApp/tree/master/Note%20Application%20Screenshots)
+[Project Screenshots]()
 
 
 
