@@ -67,7 +67,8 @@ IPLocator allows the user to enter an IP address and it will send back the lat a
 
 <!--- SCREENSHOTS -->
 ## Screenshot
-![Google_play_search_screenshotpsd](https://user-images.githubusercontent.com/26611879/75197332-df8fea00-5712-11ea-98df-4f96e32eff35.jpg)
+<img width="156" alt="githubsearch" src="https://user-images.githubusercontent.com/26611879/75198294-19fa8680-5715-11ea-862c-07ab6fa2345e.png">
+<img width="156" alt="githubresult" src="https://user-images.githubusercontent.com/26611879/75198270-0d762e00-5715-11ea-8b1c-3f8ac942fd54.png">
 
 
 
@@ -97,5 +98,4 @@ Linkedin : [https://www.linkedin.com/in/jeffreydylanbrown/](https://www.linkedin
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [linkedin-url]: https://linkedin.com/in/jeffreydylanbrown
-[screenshots]: 
 [Google Play Store]: 
