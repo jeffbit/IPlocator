@@ -10,8 +10,6 @@
     <a href="https://github.com/jeffbit/IPlocator"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/jeffbit/IPlocator">View Demo</a>
-    ·
     <a href="https://github.com/jeffbit/IPlocator/issues">Report Bug</a>
     ·
     <a href="https://github.com/jeffbit/IPlocator/issues">Request Feature</a>
