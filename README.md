@@ -2,7 +2,10 @@
  <p align = "center">
 <a href="https://play.google.com/store/apps/details?id=com.brown.jeff.iplocator">
 <img src="https://user-images.githubusercontent.com/26611879/75366175-2c8ad200-5873-11ea-954e-0719977cc28b.png" alt="Google Play Store">
+ </a>
  </p>
+
+
 
   <p align="center">
     IPLocator Information lookup.
