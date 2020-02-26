@@ -1,4 +1,8 @@
  <h3 align="center">IPLocator</h3>
+ <p align = "center">
+<a href="https://play.google.com/store/apps/details?id=com.brown.jeff.iplocator">
+<img src="https://user-images.githubusercontent.com/26611879/75366175-2c8ad200-5873-11ea-954e-0719977cc28b.png" alt="Google Play Store">
+ </p>
 
   <p align="center">
     IPLocator Information lookup.
@@ -11,6 +15,7 @@
     <a href="https://github.com/jeffbit/IPlocator/issues">Report Bug</a>
     ·
     <a href="https://github.com/jeffbit/IPlocator/issues">Request Feature</a>
+ 
   </p>
 </p>
 
@@ -35,8 +40,8 @@ IPLocator allows the user to enter an IP address and it will send back the lat a
 <!--FUTURE UPDATES -->
 ## Future Updates
 
- will include recyclerview list of all recent address lookups
- application will store data locally with room database
+ Will include recyclerview list of all recent address lookups
+ Application will store data locally with room database
  users will be able to retrieve information from recent searches/delete specific searches or delete all searches. 
  User will also have the choice to disable saving any searches at all
 
@@ -82,9 +87,11 @@ IPLocator allows the user to enter an IP address and it will send back the lat a
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/jeffbit/NoteApp](https://github.com/jeffbit/IPlocator)
+Project Link: [https://github.com/jeffbit/IPlocator](https://github.com/jeffbit/IPlocator)
 
 Linkedin : [https://www.linkedin.com/in/jeffreydylanbrown/](https://www.linkedin.com/in/jeffreydylanbrown/)
+
+Google Play Store : [https://play.google.com/store/apps/details?id=com.brown.jeff.iplocator](https://play.google.com/store/apps/details?id=com.brown.jeff.iplocator)
 
 
 
@@ -100,4 +107,3 @@ Linkedin : [https://www.linkedin.com/in/jeffreydylanbrown/](https://www.linkedin
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [linkedin-url]: https://linkedin.com/in/jeffreydylanbrown
-[Google Play Store]: 
