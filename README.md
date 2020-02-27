@@ -36,15 +36,17 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-IPLocator allows the user to enter an IP address and it will send back the lat and lon on googlemaps, along with information about the address(isp,country,city,region,name, timezone, coordinates, threat, and proxy).
+<p>IPLocator allows the user to enter an IP address and it will send back the lat and lon on googlemaps, along with information about the address(isp,country,city,region,name, timezone, coordinates, threat, and proxy).</p>
 
 <!--FUTURE UPDATES -->
 ## Future Updates
 
- Will include recyclerview list of all recent address lookups
- Application will store data locally with room database
- users will be able to retrieve information from recent searches/delete specific searches or delete all searches. 
- User will also have the choice to disable saving any searches at all
+ <ul>
+ <li> Will include recyclerview list of all recent address lookups </li>
+ <li> Application will store data locally with room database</li>
+ <li> Users will be able to retrieve information from recent searches and delete specific searches or delete all searches. </li>
+<li> Option to disable saving searches</li>
+ </ul>
 
 
 
