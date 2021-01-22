@@ -8,7 +8,7 @@
 
 
   <p align="center">
-    IPLocator Information lookup.
+    IPLocator Information lookup
     <br />
     <a href="https://github.com/jeffbit/IPlocator"><strong>Explore the docs »</strong></a>
     <br />
