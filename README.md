@@ -42,10 +42,12 @@
 ## Future Updates
 
  <ul>
- <li> Will include recyclerview list of all recent address lookups </li>
- <li> Application will store data locally with room database</li>
- <li> Users will be able to retrieve information from recent searches and delete specific searches or delete all searches. </li>
-<li> Option to disable saving searches</li>
+ <li>Will include recyclerview list of all recent address lookups </li>
+ <li>Application will store data locally with room database</li>
+ <li>Users will be able to retrieve information from recent searches and delete specific searches or delete all searches. </li>
+<li>Option to disable saving searches</li>
+ <li>Create tablet layouts</li>
+
  </ul>
 
 
